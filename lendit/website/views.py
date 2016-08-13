@@ -56,3 +56,9 @@ def request_book(request, lendituser_pk, userbook_pk):
 	userbook = UserBook.objects.filter(userbook_pk)[0]
 	Notification(user=lender, other_user=request.user, book=userbook, type='r', desc='').save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def notifications(request):
+	return render(request, 'notifications.html', {
+		'notifications': Notification.objects.filter(me_user=request.user)
+		})

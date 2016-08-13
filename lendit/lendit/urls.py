@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from website import views
-from django.views.generic import DetailView
+from django.views.generic import ListView
 
 from website.models import LenditUser
 
@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^book/(?P<pk>\S+)/$', views.book, name='book'),
     url(r'^book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.user_book, name='user_book'),
     url(r'^profile/(?P<pk>\S+)/$', views.profile, name='profile'),
-    url(r'^request_book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.request_book, name='request_book')
+    url(r'^request_book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.request_book, name='request_book'),
+    url(r'^notifications/$', views.notifications, name='notifications'),
 ]
