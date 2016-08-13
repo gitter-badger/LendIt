@@ -1,12 +1,16 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from website.models import *
+import random
 
 # Create your views here.
 
 
 def home(request):
-	return render(request, 'homepage.html', {})
+	books = list(Book.objects.all())
+	random.shuffle(books)
+	sixbooks = books[:6]
+	return render(request, 'homepage.html', {'books': sixbooks})
 
 
 def lend(request):
