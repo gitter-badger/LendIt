@@ -23,9 +23,9 @@ def lend(request):
 		tfl = request.POST['tfl']
 		url = request.POST['url']
 		book = Book.objects.filter(name=name)[0]
-		user = request.user
-		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=user).save()
-		return redirect(request.META.HTTP_REFERER)
+		lendituser = LenditUser.objects.filter(user=request.user)[0]
+		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=lendituser).save()
+		return HttpResponse("asdfas")
 
 
 def profile(request, pk):
