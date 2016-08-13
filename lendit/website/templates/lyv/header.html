@@ -1,0 +1,36 @@
+<!-- Header -->
+
+<header id="header">
+	<a href="/"><img src="/static/lyv/images/awaaz_logo.png" alt="logo"/></a>
+	<h1><a href="/">awaaz</a></h1>
+	<nav id="nav">
+		<ul>
+			<li><a href="/about">About</a></li>
+			<li><a href="/how-it-works">How It Works</a></li>
+			<li><a href="/choose">Choose Literature</a></li>
+			{% if user and not user.is_anonymous %}
+				<li>
+					<div class="btn-group dropdown">
+						<button class="btn btn-default dropdown-toggle button special" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						Hi, {{ user.first_name }}
+						<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li><a href="/users/{{ user.username }}">Dashboard</a></li>
+							<li><a href="{% url 'auth:logout' %}?next={{ request.get_full_path }}">Log Out</a>
+						</ul>
+					</div>
+				</li>
+			{% else %}
+				<li>
+				<a href="{% url 'auth:login' %}?next={{ request.get_full_path }}">
+					Sign In
+				</a>
+				</li>
+			{% endif %}
+			</li>
+			
+		</ul>
+	</nav>
+	{% include 'googleanalytics.html' %}
+</header>

@@ -1,0 +1,55 @@
+<html lang="en">
+	<head>
+	<title>Login</title>
+		<meta charset="UTF-8">
+		<title>{{ user.first_name }}&nbsp;{{ user.last_name }}</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		</noscript>
+		<style type="text/css">
+			@import url("https://fonts.googleapis.com/css?family=Raleway:200,700|Source+Sans+Pro:300,600,300italic,600italic");
+			.signuptext {
+				font-family: "Raleway", Helvetica, sans-serif;
+			}
+		</style>
+	</head>
+
+<body>
+<div id="wrapper">
+	<!-- {% include "lyv/header.html" %} -->
+
+	<section id="two" class="wrapper style2 special">
+		<div class="container">
+			<div class="modal-header text-center">
+	        	<h4 class="modal-title signuptext">Sign Up to Record</h4>
+	        </div>
+	        <div class="modal-body text-center">
+	          <div class="sign_up_button margin-30-0">  
+	              <dd class="margin_bottom_20">
+	          	<br/>
+	              <a href="{% url 'social:begin' 'facebook' %}?next={{ request.next }}">
+	              Continue with Facebook</a></dd>
+	          </div>
+	        </div>
+		</div>
+	</section>
+</div>
+	<!-- {% include "lyv/footer.html" %} -->
+
+	<!-- {% include "lyv/loginmodal.html" %} -->
+	
+</body>
+</html>
