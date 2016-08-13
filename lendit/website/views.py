@@ -28,7 +28,16 @@ def lend(request):
 		return HttpResponse("asdfas")
 
 
+def book(request, pk):
+	book = Book.objects.filter(id=pk)[0]
+	user_books = list(UserBook.objects.filter(orig_book=book))
+	return render(request, 'book_page.html', {'book': book, 'userbooks':user_books})
+
+
 def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
+	self_profile = request.user == lendituser.user
 	user_books = UserBook.objects.filter(user=lendituser)
-	return render(request, 'profile.html', {'userbooks': user_books, 'lenuser': lendituser})
+	return render(request, 'profile.html', {'userbooks': user_books,
+											'lenuser': lendituser,
+											'self_profile': self_profile})
