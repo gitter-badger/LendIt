@@ -2,12 +2,12 @@
 
 <header id="header">
 	<a href="/"><img src="/static/lyv/images/awaaz_logo.png" alt="logo"/></a>
-	<h1><a href="/">awaaz</a></h1>
+	<h1><a href="/">LendIt</a></h1>
 	<nav id="nav">
 		<ul>
-			<li><a href="/about">About</a></li>
-			<li><a href="/how-it-works">How It Works</a></li>
-			<li><a href="/choose">Choose Literature</a></li>
+			<li><a href="/about">Books</a></li>
+			<li><a href="/how-it-works">Movies</a></li>
+			<li><a href="/choose">Games</a></li>
 			{% if user and not user.is_anonymous %}
 				<li>
 					<div class="btn-group dropdown">
@@ -32,5 +32,4 @@
 			
 		</ul>
 	</nav>
-	{% include 'googleanalytics.html' %}
 </header>
