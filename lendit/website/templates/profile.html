@@ -35,7 +35,7 @@
 
 <section id="two" class="wrapper style2 special">
 		<div class="container">
-		{% if selfProfile %}
+		{% if self_profile %}
 		<h1>Dashboard</h1>
 		{% else %}
 		<h1>{{lenuser.user.first_name}}&nbsp;{{lenuser.user.last_name}}'s Profile</h1>
@@ -55,7 +55,7 @@
 				<br>
 
 				{% if userbooks %}
-					{% if selfProfile %}
+					{% if self_profile %}
 						<h3>My books:</h3>
 					{% else %}
 						<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }}'s books:</h3>
@@ -65,10 +65,13 @@
 					    <img src="{{book.image_url}}"/>
 					    {{book.lending_time}}
 					    {{book.condition}}
+                        {% if not self_profile %}
+                            <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Lend It!</button>
+                        {% endif %}
 					{% endfor %}
 				{% else %}
 					<br/>
-					{% if selfProfile %}
+					{% if self_profile %}
 						<h3>You have no books available for lending.</h3>
 						<a href="/lend" class="button big">Lend a Book</a>
 					{% else %}
@@ -77,27 +80,6 @@
 				{% endif %}
 				</div>
 				<br/><br/>
-				{% if selfProfile %}
-				<section id="three" class="profileRefer special">
-					<br/>
-					<h3>Refer a friend!</h3>
-					<p>Help Project Awaaz reach more people  by referring your friends and family.</p>
-					<div class="container 50%">
-						<form action="/refer" method="post">{% csrf_token %}
-							<div class="row uniform">
-								<div class="12u$">
-									<input name="email" id="email" value="" placeholder="Enter an email" type="email">
-								</div>
-								<div class="12u$">
-									<ul class="actions">
-										<li><input value="Invite" class="special big" type="submit"></li>
-									</ul>
-								</div>
-							</div>
-						</form>
-					</div>
-				</section>
-				{% endif %}
 			</div>
 		</div>
 		</div>
