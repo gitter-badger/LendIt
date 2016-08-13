@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^lend$', views.lend, name='lend'),
     url(r'^book/(?P<pk>\S+)/$', views.book, name='book'),
+    url(r'^book/(?P<user_pk>\S+)/(?P<book_pk>\S+)', views.user_book, name='user_book'),
     url(r'^profile/(?P<pk>\S+)/$', views.profile, name='profile')
 ]

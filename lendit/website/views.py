@@ -34,6 +34,11 @@ def book(request, pk):
 	return render(request, 'book_page.html', {'book': book, 'userbooks':user_books})
 
 
+def user_book(request, user_pk, book_pk):
+	book = Book.objects.filter(id=book_pk)[0]
+	lender = LenditUser.objects.filter(id=user_pk)[0]
+
+
 def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
 	self_profile = request.user == lendituser.user
