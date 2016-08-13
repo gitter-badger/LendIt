@@ -26,7 +26,3 @@ def lend(request):
 		user = request.user
 		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=user).save()
 		return redirect(request.META.HTTP_REFERER)
-
-
-def profile(request):
-	return render(request, 'profile.html', {})

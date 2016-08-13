@@ -6,5 +6,13 @@
 </head>
 <body>
 <img src="{{lendit.profile_pic_url}}"/>
+{{lendituser.name}}
+{{lendituser.email}}
+
+{% for book in UserBook.objects.filter(lendituser=LenditUser) %}
+    <img src="{{book.image_url}}"/>
+    {{book.lending_time}}
+    {{book.condition}}
+{% endfor %}
 </body>
 </html>
