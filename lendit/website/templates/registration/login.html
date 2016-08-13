@@ -40,7 +40,7 @@
 	          <div class="sign_up_button margin-30-0">  
 	              <dd class="margin_bottom_20">
 	          	<br/>
-	              <a href="{% url 'social:begin' 'facebook' %}?next={{ request.next }}">
+	              <a href="{% url 'social:begin' 'facebook' %}?next={{ request.GET.next }}">
 	              Continue with Facebook</a></dd>
 	          </div>
 	        </div>
