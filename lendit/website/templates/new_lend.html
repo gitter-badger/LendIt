@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lend Another Book</title>
+    <style>
+        .errormsg {
+    color: red;
+    font-family: "Times New Roman", Times, serif;
+    }
+
+    sup {
+        color: red;
+    }
+
+    h4 {
+        font-family: "Times New Roman", Times, serif;
+        color: #26a69a;
+    }
+
+    #formWrapper {
+        padding: 10%;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+	<div id="formWrapper">
+		<h4 align="center">Lend a Book</h4><br>
+		<div class="row">
+
+			<form class="col s12" method="post" name="lab2B" onsubmit="return check()">
+		  		<div class="row">
+				    <div class="input-field col s12">
+					    <input type="name " name="name">
+					    <label>Name</label><br>
+				    </div>
+		  		</div>
+		  		<div class="row">
+				    <div class="input-field col s12">
+					    <input type="text" name="condition">
+					    <label>Condition</label><br>
+				    </div>
+		  		</div>
+		  		<div class="row">
+				    <div class="input-field col s12">
+					    <input type="text" name="desc">
+					    <label>Description</label><br>
+				    </div>
+		  		</div>
+                <div class="row">
+				    <div class="input-field col s12">
+					    <input type="text" name="tfl">
+					    <label>Time for Lending</label><br>
+				    </div>
+		  		</div>
+                <div class="row">
+				    <div class="input-field col s12">
+					    <input type="text" name="url">
+					    <label>Image URL</label><br>
+				    </div>
+		  		</div>
+		  		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					<i class="material-icons right">send</i>
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+</body>
+</html>
