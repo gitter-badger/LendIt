@@ -29,17 +29,17 @@ class UserBook(models.Model):
     status = models.CharField(max_length=10, choices=STATUS)
 
 
-class RequestSent(models.Model):
-    user = models.ForeignKey('LenditUser')
-    lender = models.IntegerField()
-    book = models.CharField(max_length=255)
+class Borrowed(models.Model):
+    user = models.ForeignKey('LenditUser', related_name='borrower') 
+    lender = models.ForeignKey('LenditUser', related_name='lender')
+    book = models.ForeignKey('UserBook')
 
 
 class Notification(models.Model):
     TYPE = (('r','r'),('a','a'),('d','d'))
-    user = models.ForeignKey('LenditUser')
-    other_user = models.IntegerField()
-    book_id = models.IntegerField()
+    user = models.ForeignKey('LenditUser', related_name='me_user')
+    other_user = models.ForeignKey('LenditUser', related_name='other_user')
+    book = models.ForeignKey('UserBook')
     type = models.CharField(max_length=1, choices=TYPE)
     desc = models.CharField(max_length=100, blank=True)
 
