@@ -1,12 +1,205 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Lend It</title>
-</head>
-<body>
-This is the homepage.
-<a href="{% url 'auth:login' %}?next={{ request.get_full_path }}">
-	Sign In
-</a>
-</body>
+<!--
+	Transit by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Project Awaaz</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Let's co-create the world's largest repository of audiobooks in Indian languages, for the visually impaired. Just pick up some literature, #LendYourVoice and submit the recording, to be the voice they hear." />
+		<meta name="keywords" content="LendYourVoice,Project,Awaaz,projectawaaz,lend,your,voice,kibo,record,visually,impaired,blind" />
+		<meta property="fb:app_id" content="1728926937366224" />
+		<meta property="og:image" content="https://www.projectawaaz.org/static/lyv/images/projectawaaz.png" />
+	    <meta property="og:title" content="Project Awaaz" />
+	    <meta property="og:url" content="https://www.projectawaaz.org/" />
+	    <meta property="og:description" content="Let's co-create the world's largest repository of audiobooks in Indian languages, for the visually impaired." />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		</noscript>
+
+	</head>
+	<body class="landing">
+	<div id="wrapper">
+		{% include "lyv/header.html" %}
+
+		<!-- Banner -->
+			<section id="banner">
+				<div id="logo"><img src="/static/lyv/images/awaaz_logo.png" alt="logo"/></div>
+				<h2>Lend It</h2>
+				<p>Lend today, borrow tomorrow</p>
+				<ul class="actions">
+					<li>
+						<a href="/choose" class="button big">Record Now</a>
+					</li>
+				</ul>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2 special">
+				<div class="container">
+					<div class="row 150%">
+						<div class="4u 12u$(medium)">
+							<section class="box" style="border: 0; border-radius: 0px;">
+								<img class="icon big rounded" style="border-radius: 0%; width:5em; height:5em; background-color: transparent;" src="/static/lyv/images/icons1.svg">
+								<h4>of all visually impaired Indians are kids<br/><br/></h4>
+							</section>
+						</div>
+						<div class="4u 12u$(medium)">
+							<section class="box" id="leftRightBorder">
+								<img class="icon big rounded" style="border-radius: 0%; width:5em; height:5em; background-color: transparent; " src="/static/lyv/images/icons2.svg">
+								<h4>of them are able to receive any education</h4>
+							</section>
+						</div>
+						<div class="4u$ 12u$(medium)">
+							<section class="box" style="border: 0;">
+								<img class="icon big rounded" style="border-radius: 0%; width:5em; height:5em; background-color: transparent;" src="/static/lyv/images/icons3.svg">
+								<h4>of all published literature is available as audiobooks</h4>
+							</section>
+						</div>
+					</div>
+					<header class="major">
+						<p>
+						Project Awaaz is a community based initiative to make the content more accessible for all.
+						<br/>
+						So what are you waiting for?
+						<br/>
+						Let's co-create a better world, one poem at a time.
+						</p>
+					</header>
+<!-- 					<section class="profiles">
+						<div class="row">
+							<section class="3u 6u(medium) 12u$(xsmall) profile">
+								<img src="/static/lyv/images/profile_placeholder.gif" alt="" />
+								<h4>Lorem ipsum</h4>
+								<p>Lorem ipsum dolor</p>
+							</section>
+							<section class="3u 6u$(medium) 12u$(xsmall) profile">
+								<img src="/static/lyv/images/profile_placeholder.gif" alt="" />
+								<h4>Voluptatem dolores</h4>
+								<p>Ullam nihil repudi</p>
+							</section>
+							<section class="3u 6u(medium) 12u$(xsmall) profile">
+								<img src="/static/lyv/images/profile_placeholder.gif" alt="" />
+								<h4>Doloremque quo</h4>
+								<p>Harum corrupti quia</p>
+							</section>
+							<section class="3u$ 6u$(medium) 12u$(xsmall) profile">
+								<img src="/static/lyv/images/profile_placeholder.gif" alt="" />
+								<h4>Voluptatem dicta</h4>
+								<p>Et natus sapiente</p>
+							</section>
+						</div>
+					</section> -->
+					<footer>
+						<ul class="actions">
+							<li>
+								<a href="/choose" class="button big">Get Started</a>
+							</li>
+						</ul>
+					</footer>
+				</div>
+			</section>
+
+
+		<!-- One -->
+			<section id="one" class="wrapper style1 special">
+				<div class="container">
+					<header class="major">
+						<h2>How it Works</h2>
+						<p>Be the voice they hear, in just 3 easy steps!</p>
+					</header>
+					<div class="row 150%">
+						<div class="4u 12u$(medium)">
+							<section class="box">
+								<i class="icon big rounded color1 fa-book"></i>
+								<h3>Choose a book</h3>
+								<p>Discover literature in its unadulterated form, the way it’s supposed to be. Choose from your favorite books, stories and poems in multiple languages and discover India’s most celebrated authors and so many hidden gems.</p>
+							</section>
+						</div>
+						<div class="4u 12u$(medium)">
+							<section class="box">
+								<i class="icon big rounded color9 fa-microphone"></i>
+								<h3>Record an audiobook</h3>
+								<p>After having selected a piece of literature, hit *Record* and read the text out loud from your screen. Listen to your recording and record again if you’re not satisfied. Remember, quality first.<br/><br/></p>
+							</section>
+						</div>
+						<div class="4u$ 12u$(medium)">
+							<section class="box">
+								<i class="icon big rounded color6 fa-heart"></i>
+								<h3>Lend your voice</h3>
+								<p>If satisfied with the recording, submit it to make it available for the millions of visually impaired people in India. Get notified about the impact that you create by taking out just a few minutes of your day. #LendYourVoice now!</p>
+							</section>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Four -->
+			<section id="four" class="wrapper style2 special">
+				<div class="container">
+					<header class="major">
+						<h2>In The News!</h2>
+					</header>
+					<div class="row uniform">
+						<div class="6u 12u$(small)">
+							<a href="http://epaper2.mid-day.com/epaper/11-jul-2016-252-edition-Mumbai-Page-25.html"><img src="/static/lyv/images/midday.png" alt="midday"/></a>
+						</div>
+						<div class="6u 12u$(small)">
+							<a href="https://nearfox.com/explore/project-aawaaz"><img src="/static/lyv/images/nearfox.png" alt="nearfox"/></a>
+						</div>
+					</div>		
+				</div>
+			</section>
+
+		
+		<!-- Three -->
+			<section id="three" class="wrapper style3 special">
+				<div class="container">
+					<header class="major">
+						<h3>Got any feedback/suggestions? Get in touch!</h3>
+					</header>
+				</div>
+				<div class="container 50%">
+					<form id="feedbackform" action="/feedback" method="post">{% csrf_token %}
+						<div class="row uniform">
+							<div class="6u 12u$(small)">
+								<input name="name" id="name" value="" placeholder="Name" type="text">
+							</div>
+							<div class="6u$ 12u$(small)">
+								<input name="email" id="email" value="" placeholder="Email" type="email">
+							</div>
+							<div class="12u$">
+								<textarea name="message" id="message" placeholder="Message" rows="6"></textarea>
+							</div>
+							<div class="12u$">
+								<ul class="actions">
+									<li><input value="Send Message" class="special big" type="submit"></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+					<p id="thankyoumessage" style="visibility: hidden;">
+						Thanks for the message! We will get back to you shortly.
+					</p>
+				</div>
+			</section>
+			<br/>
+	</div>
+		{% include "lyv/footer.html" %}
+
+		{% include "lyv/loginmodal.html" %}
+
+	</body>
 </html>

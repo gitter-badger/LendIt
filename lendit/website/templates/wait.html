@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Lend It</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+		<script src="/static/lyv_record/js/submit.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		</noscript>
+		
+</head>
+<body>
+This is the homepage.
+<a href="{% url 'auth:login' %}?next={{ request.get_full_path }}">
+	Sign In
+</a>
+</body>
+</html>
