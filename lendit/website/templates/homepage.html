@@ -73,6 +73,11 @@
 			getValue: "name",
 			minCharNumber: 0,
 			list: {
+				 onChooseEvent: function() {
+		            var selectedItemValue = $("#square").getSelectedItemData().number;
+		            console.log(selectedItemValue);
+		            window.location.href = "/book/" + selectedItemValue;
+		        },
 				match: {
 					enabled: true
 				},
