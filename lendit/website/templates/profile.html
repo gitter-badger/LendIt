@@ -114,14 +114,15 @@ jQuery(function ($) {
 {% include "lyv/header.html" %}
 
 <section id="two" class="wrapper style2 special">
-		<div class="container">
+		<div class="container 50%">
 		{% if self_profile %}
 		<h1>Dashboard</h1>
+		<br/>
 		{% else %}
 		<h1>{{lenuser.user.first_name}}&nbsp;{{lenuser.user.last_name}}'s Profile</h1>
 		{% endif %}
-		<div class="row">
-			<div class="4u 12u$(medium) profileDetails">
+		<div class="row uniform">
+			<div class="12u$ profileDetails">
 				<p>
 				<div class="profilePicture" style="background-image:url('{{lenuser.profile_pic_url}}')">
 				</div>
@@ -175,7 +176,7 @@ jQuery(function ($) {
                         <button disabled>Request Sent</button>
                     {% endif %}
                 {% else %}
-                    <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
+                    <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrowed It!</button>
                 {% endif %}
 	        {% endif %}
 	        <br>
