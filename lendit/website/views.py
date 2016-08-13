@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from website.models import *
 import random
@@ -25,7 +26,7 @@ def lend(request):
 		book = Book.objects.filter(name=name)[0]
 		lendituser = LenditUser.objects.filter(user=request.user)[0]
 		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=lendituser).save()
-		return HttpResponse("asdfas")
+		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def book(request, pk):
@@ -48,3 +49,10 @@ def profile(request, pk):
 	return render(request, 'profile.html', {'userbooks': user_books,
 											'lenuser': lendituser,
 											'self_profile': self_profile})
+
+
+def request_book(request, lendituser_pk, userbook_pk):
+	lender = LenditUser.objects.filter(lendituser_pk)[0]
+	userbook = UserBook.objects.filter(userbook_pk)[0]
+	Notification(user=lender, other_user=request.user, book=userbook, type='r', desc='').save()
+	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
