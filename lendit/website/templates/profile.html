@@ -59,7 +59,15 @@
 					    {{book.lending_time}}
 					    {{book.condition}}
                         {% if not self_profile %}
-                            <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Lend It!</button>
+                            {% if borrowed_or_not.forloop.counter0 %}
+                                {% if borrowed_or_not.forloop.counter0.accepted %}
+                                    <button disabled>Borrowed</button>
+                                {% else %}
+                                    <button disabled>Request Sent</button>
+                                {% endif %}
+                            {% else %}
+                                <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Lend It!</button>
+                            {% endif %}
                         {% endif %}
                         <br>
 					{% endfor %}

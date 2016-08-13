@@ -46,13 +46,18 @@ def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
 	self_profile = request.user == lendituser.user
 	user_books = UserBook.objects.filter(user=lendituser)
+	borrowed_or_not = []
+	for i in user_books:
+		borrowed_or_not.append(Borrowed.objects.filter(user=request.user.lendituser, lender=lendituser, book=i))
 	return render(request, 'profile.html', {'userbooks': user_books,
 											'lenuser': lendituser,
-											'self_profile': self_profile})
+											'self_profile': self_profile,
+	                                        'borrowed_or_not': borrowed_or_not})
 
 
 def request_book(request, lendituser_pk, userbook_pk):
 	lender = LenditUser.objects.filter(lendituser_pk)[0]
 	userbook = UserBook.objects.filter(userbook_pk)[0]
-	Notification(user=lender, other_user=request.user, book=userbook, type='r', desc='').save()
+	Notification(user=lender, other_user=request.user, book=userbook, type='r', desc='',read=0).save()
+	Borrowed(user=request.user, lender=lender, book=userbook, accepted=0).save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
