@@ -168,7 +168,15 @@ jQuery(function ($) {
 	        {% if self_profile %}
 	        	<button disabled class="button small" onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
 	        {% else %}
-	            <button class="button small" onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
+                {% if borrowed_or_not.forloop.counter0 %}
+                    {% if borrowed_or_not.forloop.counter0.accepted %}
+                        <button disabled>Borrowed</button>
+                    {% else %}
+                        <button disabled>Request Sent</button>
+                    {% endif %}
+                {% else %}
+                    <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
+                {% endif %}
 	        {% endif %}
 	        <br>
 	        </div>

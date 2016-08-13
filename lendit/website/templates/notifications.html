@@ -1,1 +1,23 @@
-n
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Notifications</title>
+</head>
+<body>
+<ul>
+{% for notif in notifications %}
+<li>
+{% if notif.type == 'r' %}
+<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="#">{{notif.book.orig_book.name}}</a>.
+{% endif %}
+{% if notif.type == 'a' %}
+<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="#">{{notif.book.orig_book.name}}</a>.
+{% endif %}
+{% if notif.type == 'd' %}
+<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="#">{{notif.book.orig_book.name}}</a>.
+{% endif %}
+</li>
+{% endfor %}
+</ul>
+</body>
+</html>
