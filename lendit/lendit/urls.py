@@ -16,11 +16,15 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from website import views
+from django.views.generic import DetailView
+
+from website.models import LenditUser
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^$', views.home, name='home'),
-    url(r'^lend$', views.lend, name='lend')
+    url(r'^lend$', views.lend, name='lend'),
+    url(r'^profile/(?P<pk>\S+)/$', DetailView.as_view(model=LenditUser, template_name='website/profile.html'), name='profile')
 ]
