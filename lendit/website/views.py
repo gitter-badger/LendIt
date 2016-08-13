@@ -1,16 +1,18 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from website.models import *
 
 # Create your views here.
+
+
 def home(request):
 	return render(request, 'homepage.html', {})
 
 
 def lend(request):
-	if(request.method == "GET"):
+	if request.method == "GET":
 		return render(request, 'new_lend.html', {})
-	if(request.method == "POST"):
+	if request.method == "POST":
 		name = request.POST['name']
 		condition = request.POST['condition']
 		desc = request.POST['desc']
@@ -19,4 +21,8 @@ def lend(request):
 		book = Book.objects.filter(name=name)[0]
 		user = request.user
 		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=user).save()
-		return HttpResponse(request.POST['name'])
+		return redirect(request.META.HTTP_REFERER)
+
+
+def profile(request):
+	return render(request, 'profile.html', {})
