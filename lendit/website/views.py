@@ -36,5 +36,8 @@ def book(request, pk):
 
 def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
+	self_profile = request.user == lendituser.user
 	user_books = UserBook.objects.filter(user=lendituser)
-	return render(request, 'profile.html', {'userbooks': user_books, 'lenuser': lendituser})
+	return render(request, 'profile.html', {'userbooks': user_books,
+											'lenuser': lendituser,
+											'self_profile': self_profile})
