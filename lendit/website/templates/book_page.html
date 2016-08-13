@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>{{book.name}}</title>
 </head>
 <body>
+{{book.name}}
+<img src="{{book.image_url}}">
 
+<br/> <br/>
+{% for userbook in userbooks %}
+<h2>{{userbook.user.first_name}} + {{userbook.user.last_name}}</h2>
+<img src="{{userbook.image_url}}">
+{% endfor %}
 </body>
 </html>

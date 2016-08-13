@@ -28,6 +28,12 @@ def lend(request):
 		return redirect(request.META.HTTP_REFERER)
 
 
+def book(request, pk):
+	book = Book.objects.filter(id=pk)[0]
+	user_books = list(UserBook.objects.filter(orig_book=book))
+	return render(request, 'book_page.html', {'book': book, 'userbooks':user_books})
+
+
 def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
 	user_books = UserBook.objects.filter(user=lendituser)

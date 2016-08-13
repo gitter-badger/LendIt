@@ -26,5 +26,6 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^$', views.home, name='home'),
     url(r'^lend$', views.lend, name='lend'),
+    url(r'^book/(?P<pk>\S+)/$', views.book, name='book'),
     url(r'^profile/(?P<pk>\S+)/$', views.profile, name='profile')
 ]
