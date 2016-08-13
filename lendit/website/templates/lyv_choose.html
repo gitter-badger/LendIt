@@ -1,0 +1,138 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ language }} - Choose Literature</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Choose a language to pick some literature from English, Hindi, Marathi, Gujarati and Tamil." />
+		<meta name="keywords" content="LendYourVoice,Project,Awaaz,projectawaaz,lend,your,voice,kibo,record,visually,impaired,blind,choose,language,english,hindi,marathi,tamil,gujarati" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		</noscript>
+
+	</head>
+
+	<script type="text/javascript">
+		function insertParam(key, value) {
+	        key = escape(key); value = escape(value);
+
+	        var kvp = document.location.search.substr(1).split('&');
+	        if (kvp == '') {
+	            document.location.search = '?' + key + '=' + value;
+	        }
+	        else {
+
+	            var i = kvp.length; var x; while (i--) {
+	                x = kvp[i].split('=');
+
+	                if (x[0] == key) {
+	                    x[1] = value;
+	                    kvp[i] = x.join('=');
+	                    break;
+	                }
+	            }
+
+	            if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+
+	            //this will reload the page, it's likely better to store this until finished
+	            document.location.search = kvp.join('&');
+	        }
+	    }
+
+	    function get(name){
+		   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+		      return decodeURIComponent(name[1]);
+		}
+
+	    function feelingLucky() {
+	        window.location = "/choose/lucky?language=" + '{{ language }}';
+	    }
+
+	</script>
+
+<body>
+<div id="wrapper">
+	{% include "lyv/header.html" %}
+	
+	<section id="two" class="style2 special">
+		<br/>
+		<div class="container">
+		<div class="btn-group dropdown">
+		  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose Language
+		  <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/choose/english">English</a></li>
+			<li><a href="/choose/hindi">Hindi</a></li>
+			<li><a href="/choose/gujarati">Gujarati</a></li>
+			<li><a href="/choose/tamil">Tamil</a></li>
+			<li><a href="/choose/marathi">Marathi</a></li>
+		  </ul>
+		</div>
+		<p>
+			{% for poem in poems %}
+			    <li id="poemList"><a href="/record/poem/{{ poem.id }}"> {{ poem.title }} - {{ poem.author }}</a></li>
+			{% endfor %}
+		</p>
+
+		<div class="text-center" style="margin-left: 5em;">
+			<ul class="pagination" >
+
+				{% if currentPage == 1 %}
+				<li class="disabled"><a>←</a></li>
+				{% else %}
+		        <li><a href="/choose/{{ language }}/1" style="cursor: pointer;">←</a></li>
+				{% endif %}
+
+				{% if currentPage|add:"-5" == 1 %}
+				<li class="disabled"><a >&laquo;</a></li>
+				{% elif currentPage|add:"-5" > 1 %}
+				<li><a href="/choose/{{ language }}/{{ currentPage|add:"-5" }}" style="cursor: pointer;">&laquo;</a></li>
+				{% else %}
+		        <li><a href="/choose/{{ language }}/1" style="cursor: pointer;">&laquo;</a></li>
+				{% endif %}
+
+				{% for i in pageRange %}
+					{% if i == currentPage %} 
+				  	<li class="active"><a>{{ i }}</a></li>
+				  	{% else %}
+				  	<li><a href="/choose/{{ language }}/{{ i }}" style="cursor: pointer;">{{ i }}</a></li>
+					{% endif %}
+				{% endfor %}
+
+				{% if currentPage == totalPages %}
+				<li class="disabled"><a>&raquo;</a></li>
+				{% elif currentPage|add:"5" < totalPages %}
+				<li><a href='/choose/{{ language }}/{{ currentPage|add:"5" }}' style="cursor: pointer;">&raquo;</a></li>
+				{% else %}
+		        <li><a href="/choose/{{ language }}/{{ totalPages }}" style="cursor: pointer;">&raquo;</a></li>
+				{% endif %}
+
+				{% if currentPage == totalPages %}
+				<li class="disabled"><a>→</a></li>
+				{% else %}
+		        <li><a href="/choose/{{ language }}/{{ totalPages }}" style="cursor: pointer;">→</a></li>
+				{% endif %}
+		    </ul>
+		    </div>
+		</div>
+
+		<a onclick="feelingLucky();" class="button big">I'm feeling lucky!</a>
+	</section>
+
+</div>
+<div class="push"></div>
+	{% include "lyv/footer.html" %}
+
+	{% include "lyv/loginmodal.html" %}
+	
+</body>
+</html>

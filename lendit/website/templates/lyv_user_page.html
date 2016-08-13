@@ -1,0 +1,100 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ displayuser.first_name }}&nbsp;{{ displayuser.last_name }}</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="Project Awaaz User: {{ displayuser.first_name }}  {{ displayuser.last_name }}" />
+		<meta name="keywords" content="ProjectAwaaz,project,awaaz,user,{{ displayuser.first_name }},{{ displayuser.last_name }}" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		</noscript>
+
+	</head>
+
+<body>
+<div id="wrapper">
+	{% include "lyv/header.html" %}
+
+	<section id="two" class="wrapper style2 special">
+		<div class="container">
+		{% if selfProfile %}
+		<h1>Dashboard</h1>
+		{% else %}
+		<h1>{{ displayuser.first_name }}&nbsp;{{ displayuser.last_name }}'s Profile</h1>
+		{% endif %}
+		<div class="row">
+			<div class="4u 12u$(medium) profileDetails">
+				<p>
+				<div class="profilePicture" style="background-image:url('{{ profile_picture_link }}')">
+				</div>
+				<br/><br/>
+				<h3>{{ displayuser.first_name }}&nbsp;{{ displayuser.last_name }}</h3>
+				</p>
+			</div>
+			<div class="8u$ 12u$(medium)">
+				<br/>
+				<div class="profileActivity">
+				{% if poemsList %}
+					<h3>Recent Activity:</h3>
+					<br/>
+					{% for poem in poemsList %}
+					<li id="poemList"><a href="/record?type=poem&id={{ poem.id }}"> {{ poem.title }} - {{ poem.author }}</a></li>
+					{% endfor %}
+					<br/>
+					{% if selfProfile %}
+						<a href="/choose" class="button big">Record More</a>
+					{% endif %}
+				{% else %}
+					{% if selfProfile %}
+						<h3>You have no recent activity.</h3>
+						<a href="/choose" class="button big">Get Started</a>
+					{% else %}
+						<h3>{{ displayuser.first_name }}&nbsp;{{ displayuser.last_name }} has no recent activity.</h3>
+					{% endif %}
+				{% endif %}
+				</div>
+				<br/><br/>
+				{% if selfProfile %}
+				<section id="three" class="profileRefer special">
+					<br/>
+					<h3>Refer a friend!</h3>
+					<p>Help Project Awaaz reach more people  by referring your friends and family.</p>
+					<div class="container 50%">
+						<form action="/refer" method="post">{% csrf_token %}
+							<div class="row uniform">
+								<div class="12u$">
+									<input name="email" id="email" value="" placeholder="Enter an email" type="email">
+								</div>
+								<div class="12u$">
+									<ul class="actions">
+										<li><input value="Invite" class="special big" type="submit"></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div>
+				</section>
+				{% endif %}
+			</div>
+		</div>
+		</div>
+	</section>
+
+
+</div>
+	{% include "lyv/footer.html" %}
+
+	{% include "lyv/loginmodal.html" %}
+	
+</body>
+</html>

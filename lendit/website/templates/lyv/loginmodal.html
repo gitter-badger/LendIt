@@ -1,0 +1,22 @@
+<!-- Log In Modal starts here -->
+<div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title">Sign Up to Record</h4>
+        </div>
+        <div class="modal-body text-center">
+          <div class="sign_up_button margin-30-0">  
+              <dd class="margin_bottom_20"><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+              Continue with Facebook</a></dd>
+              <dl><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">
+              Continue with Google</a></dl>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>

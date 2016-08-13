@@ -5,5 +5,8 @@
 </head>
 <body>
 This is the homepage.
+<a href="{% url 'auth:login' %}?next={{ request.get_full_path }}">
+	Sign In
+</a>
 </body>
 </html>
