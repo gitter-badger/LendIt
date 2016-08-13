@@ -55,15 +55,15 @@ def profile(request, pk):
 	                                        'borrowed_or_not': borrowed_or_not})
 
 
-def request_book(request, lendituser_pk, userbook_pk):
-	lender = LenditUser.objects.filter(lendituser_pk)[0]
-	userbook = UserBook.objects.filter(userbook_pk)[0]
-	Notification(user=lender, other_user=request.user, book=userbook, type='r', desc='',read=0).save()
-	Borrowed(user=request.user, lender=lender, book=userbook, accepted=0).save()
+def request_book(request, user_pk, book_pk):
+	lender = LenditUser.objects.filter(id=user_pk)[0]
+	userbook = UserBook.objects.filter(id=book_pk)[0]
+	Notification(user=lender, other_user=request.user.lendituser, book=userbook, type='r', desc='',read=0).save()
+	Borrowed(user=request.user.lendituser, lender=lender, book=userbook, accepted=0).save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def notifications(request):
 	return render(request, 'notifications.html', {
-		'notifications': Notification.objects.filter(me_user=request.user)
+		'notifications': Notification.objects.filter(user=request.user.lendituser)
 		})
