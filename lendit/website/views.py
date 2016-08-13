@@ -26,7 +26,7 @@ def lend(request):
 		book = Book.objects.filter(name=name)[0]
 		lendituser = LenditUser.objects.filter(user=request.user)[0]
 		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=lendituser).save()
-		return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+		return HttpResponseRedirect("/profile/"+str(lendituser.id))
 
 
 def book(request, pk):

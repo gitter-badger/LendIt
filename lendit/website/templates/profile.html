@@ -55,12 +55,13 @@
 					{% endif %}
 					<br/>
 					{% for book in userbooks %}
-					    <img src="{{book.image_url}}"/>
+					    <img height="350px" width="250px" src="{{book.image_url}}"/>
 					    {{book.lending_time}}
 					    {{book.condition}}
                         {% if not self_profile %}
                             <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Lend It!</button>
                         {% endif %}
+                        <br>
 					{% endfor %}
 				{% else %}
 					<br/>
