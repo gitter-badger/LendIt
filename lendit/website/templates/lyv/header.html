@@ -16,7 +16,7 @@
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-							<li><a href="/users/{{ user.username }}">Dashboard</a></li>
+							<li><a href="/profile/{{ user.id }}">Dashboard</a></li>
 							<li><a href="{% url 'auth:logout' %}?next={{ request.get_full_path }}">Log Out</a>
 						</ul>
 					</div>

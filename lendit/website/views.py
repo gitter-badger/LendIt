@@ -26,3 +26,9 @@ def lend(request):
 		user = request.user
 		UserBook(desc=desc, lending_time=tfl, image_url=url, condition=condition, orig_book=book, user=user).save()
 		return redirect(request.META.HTTP_REFERER)
+
+
+def profile(request, pk):
+	lendituser = LenditUser.objects.filter(id=pk)[0]
+	user_books = UserBook.objects.filter(user=lendituser)
+	return render(request, 'profile.html', {'userbooks': user_books, 'lenuser': lendituser})

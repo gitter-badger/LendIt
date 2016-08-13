@@ -5,11 +5,13 @@
     <title>{{lendituser.name}}'s Profile</title>
 </head>
 <body>
-<img src="{{lendit.profile_pic_url}}"/>
-{{lendituser.name}}
-{{lendituser.email}}
+{% include "lyv/header.html" %}
+<img src="{{lenuser.profile_pic_url}}"/>
+{{lenuser.user.first_name}}
+{{lenuser.user.last_name}}
+{{lenuser.email}}
 
-{% for book in UserBook.objects.filter(lendituser=LenditUser) %}
+{% for book in userbooks %}
     <img src="{{book.image_url}}"/>
     {{book.lending_time}}
     {{book.condition}}

@@ -26,5 +26,5 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^$', views.home, name='home'),
     url(r'^lend$', views.lend, name='lend'),
-    url(r'^profile/(?P<pk>\S+)/$', DetailView.as_view(model=LenditUser, template_name='website/profile.html'), name='profile')
+    url(r'^profile/(?P<pk>\S+)/$', views.profile, name='profile')
 ]
