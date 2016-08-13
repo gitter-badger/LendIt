@@ -33,6 +33,7 @@ class Borrowed(models.Model):
     user = models.ForeignKey('LenditUser', related_name='borrower') 
     lender = models.ForeignKey('LenditUser', related_name='lender')
     book = models.ForeignKey('UserBook')
+    accepted = models.IntegerField()
 
 
 class Notification(models.Model):
@@ -42,4 +43,4 @@ class Notification(models.Model):
     book = models.ForeignKey('UserBook')
     type = models.CharField(max_length=1, choices=TYPE)
     desc = models.CharField(max_length=100, blank=True)
-
+    read = models.IntegerField()
