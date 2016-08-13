@@ -31,12 +31,14 @@ def lend(request):
 def book(request, pk):
 	book = Book.objects.filter(id=pk)[0]
 	user_books = list(UserBook.objects.filter(orig_book=book))
-	return render(request, 'book_page.html', {'book': book, 'userbooks':user_books})
+	return render(request, 'book_page.html', {'book': book, 'userbooks': user_books})
 
 
 def user_book(request, user_pk, book_pk):
 	book = Book.objects.filter(id=book_pk)[0]
 	lender = LenditUser.objects.filter(id=user_pk)[0]
+	userbook = UserBook.objects.filter(user=lender, orig_book=book)[0]
+	return render(request, 'user_book.html', {'book': userbook, 'lender': lender})
 
 
 def profile(request, pk):
