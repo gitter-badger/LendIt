@@ -5,13 +5,15 @@
 	<h1><a href="/">LendIt</a></h1>
 	<nav id="nav">
 		<ul>
-			<li><a href="/about">Books</a></li>
-			<li><a href="/how-it-works">Movies</a></li>
-			<li><a href="/choose">Games</a></li>
+			<li><a href="/#two">Books</a></li>
+			<li><a href="/#two">Movies</a></li>
+			<li><a href="/#two">Games</a></li>
+			<li><a href="/lend" class="button small">Lend</a></li>
+			<li><a href="/#two" class="button small">Borrow</a></li>
 			{% if user and not user.is_anonymous %}
 				<li>
 					<div class="btn-group dropdown">
-						<button class="btn btn-default dropdown-toggle button special" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+						<button class="btn btn-default dropdown-toggle button special big" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 						Hi, {{ user.first_name }}
 						<span class="caret"></span>
 						</button>
