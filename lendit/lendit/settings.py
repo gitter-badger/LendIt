@@ -41,6 +41,20 @@ INSTALLED_APPS = [
     'website',
 ]
 
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.social_auth.associate_by_email',  # <--- enable this one
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'website.pipeline.user_profile_picture',
+)
+
 TEMPLATE_CONTEXT_PROCESSORS = (
    'django.contrib.auth.context_processors.auth',
    'django.core.context_processors.debug',
@@ -140,6 +154,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = '/login/'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  
+    # pattern is (source key, destination key)
+    ('email', 'email'),
+    ('profile','profile')
+]
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_KEY = "288462238183603"
 SOCIAL_AUTH_FACEBOOK_SECRET = "0b995b57e0b55c6629af5b836219b29f"
