@@ -77,7 +77,6 @@
 			</section>
 
 			<script>
-			$("#square").width($("$image_url").width());
 			var options = {
 				url: "static/lyv/books.json",
 				getValue: "name",
@@ -93,6 +92,10 @@
 				theme: "square"
 			};
 			$("#square").easyAutocomplete(options);
+
+			window.onresize = function(event) {
+				$("#square").width($("$image_url").width());
+			}
 			</script>
 	</div>
 
