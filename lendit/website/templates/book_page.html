@@ -9,8 +9,12 @@
 
 <br/> <br/>
 {% for userbook in userbooks %}
-<h2>{{userbook.user.user.first_name}} {{userbook.user.user.last_name}}</h2>
-<img src="{{userbook.image_url}}">
+<a href="/book/{{userbook.user.id}}/{{userbook.orig_book.id}}"><h2>{{userbook.user.user.first_name}} {{userbook.user.user.last_name}}</h2></a>
+	{% if userbook.user.user != request.user %}
+		<a href="/book/{{userbook.user.id}}/{{userbook.orig_book.id}}"><img src="{{userbook.image_url}}"></a>
+		{{userbook.condition}}
+		{{userbook.status}}
+	{%endif%}
 {% endfor %}
 </body>
 </html>
