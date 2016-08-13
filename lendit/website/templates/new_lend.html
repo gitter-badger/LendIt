@@ -30,6 +30,7 @@
 		<div class="row">
 
 			<form class="col s12" method="post" name="lab2B" onsubmit="return check()">
+				{% csrf_token %}
 		  		<div class="row">
 				    <div class="input-field col s12">
 					    <input type="name " name="name">
