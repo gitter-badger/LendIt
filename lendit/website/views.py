@@ -7,3 +7,6 @@ def home(request):
 
 def lend(request):
 	return render(request, 'new_lend.html', {})
+
+def book(request):
+	return render(request, 'book_page.html', {})

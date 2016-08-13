@@ -14,7 +14,6 @@ class Book(models.Model):
 
 class LenditUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
     profile_pic_url = models.URLField()
     email = models.EmailField()
 
