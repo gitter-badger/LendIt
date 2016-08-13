@@ -17,9 +17,96 @@
 		<link rel="stylesheet" href="/static/lyv/css/style.css" />
 		<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
 	</noscript>
+	<script src="/static/lyv/js/sly.min.js"></script>
 
-	<style>
+	<style type="text/css">
+.example { margin: 80px auto 40px; }
+
+.example button, .example button { background: transparent; border: 0; color: black; opacity: .5; }
+.example button:hover, .example button:hover { opacity: 1; }
+.example button:disabled, .example button:disabled { opacity: .2; }
+
+.example .forward, .example .backward { float: left; width: 100px; height: 200px; font-size: 60px; }
+.example .forward { float: right; }
+
+.example .frame { margin: 0 auto; width: 80%; height: 700px; line-height: 200px; overflow: hidden; text-shadow: none; }
+.example .frame ul { list-style: none; margin: 0; padding: 0; height: 100%; font-size: 50px; }
+.example .frame ul li { float: left; width: 380px; height: 100%; margin: 0 1px 0 0; padding: 0; background: #eee; color: #3a3c47; text-align: center; cursor: pointer; }
+.example .frame ul li.active { color: #fff; background: #82bf4c; }
+
+.example .scrollbar { margin: 0 auto 30px; width: 940px; height: 2px; line-height: 0; }
+.example .scrollbar .handle { width: 100px; height: 100%; background: #fff; cursor: pointer; }
+.example .scrollbar .handle .mousearea { position: absolute; top: -9px; left: 0; width: 100%; height: 20px; }
+
+.example .pages { list-style: none; margin: 20px 0; padding: 0; text-align: center; }
+.example .pages li { display: inline-block; width: 14px; height: 14px; margin: 0 4px; text-indent: -999px; border-radius: 10px; cursor: pointer; overflow: hidden;
+	background: #fff; box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+}
+.example .pages li:hover { background: #aaa; }
+.example .pages li.active { background: #666; }
+
+.example .controls { margin: 50px 0 0; text-align: center; }
+.example .controls .divider { display: inline-block; margin: 0 10px; }
+.example .controls button { line-height: 32px; vertical-align: middle; font-family: Novecento, sans-serif; }
+.example .controls button i { position: relative; top: -2px; margin: 5px; padding: 0; font-size: 32px; vertical-align: middle; }
+
 	</style>
+
+	<script type="text/javascript">
+/*global Sly */
+jQuery(function ($) {
+	'use strict';
+	document.getElementsByTagName('html')[0].className += ' ' +
+		(~window.navigator.userAgent.indexOf('MSIE') ? 'ie' : 'no-ie');
+	var $example = $('#example');
+	var $frame = $example.find('.frame'); window.frr = $frame;
+	var sly = new Sly($frame, {
+		horizontal: 1,
+		itemNav: 'forceCentered',
+		activateMiddle: 1,
+		smart: 1,
+		activateOn: 'click',
+		mouseDragging: 1,
+		touchDragging: 1,
+		releaseSwing: 1,
+		startAt: 10,
+		scrollBar: $example.find('.scrollbar'),
+		scrollBy: 1,
+		pagesBar: $example.find('.pages'),
+		activatePageOn: 'click',
+		speed: 200,
+		moveBy: 600,
+		elasticBounds: 1,
+		dragHandle: 1,
+		dynamicHandle: 1,
+		clickBar: 1,
+
+		// Buttons
+		forward: $example.find('.forward'),
+		backward: $example.find('.backward'),
+		prev: $example.find('.prev'),
+		next: $example.find('.next'),
+		prevPage: $example.find('.prevPage'),
+		nextPage: $example.find('.nextPage')
+	}).init();
+
+	// Method calling buttons
+	$example.on('click', 'button[data-action]', function () {
+		var action = $(this).data('action');
+
+		switch (action) {
+			case 'add':
+				sly.add('<li>' + sly.items.length + '</li>');
+				break;
+			case 'remove':
+				sly.remove(-1);
+				break;
+			default:
+				sly[action]();
+		}
+	});
+});
+	</script>
 </head>
 
 <body>
@@ -42,42 +129,77 @@
 				<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }}</h3>
 				</p>
 			</div>
-			<div class="8u$ 12u$(medium)">
-				<br/>
-				<div class="profileActivity">
-				<br>
+		</div>
 
-				{% if userbooks %}
-					{% if self_profile %}
-						<h3>My books:</h3>
-					{% else %}
-						<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }}'s books:</h3>
-					{% endif %}
-					<br/>
-					{% for book in userbooks %}
-					    <img height="350px" width="250px" src="{{book.image_url}}"/>
-					    {{book.lending_time}}
-					    {{book.condition}}
-                        {% if not self_profile %}
-                            <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Lend It!</button>
-                        {% endif %}
-                        <br>
-					{% endfor %}
-				{% else %}
-					<br/>
-					{% if self_profile %}
-						<h3>You have no books available for lending.</h3>
-						<a href="/lend" class="button big">Lend a Book</a>
-					{% else %}
-						<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }} has no available books for lending.</h3>
-					{% endif %}
-				{% endif %}
-				</div>
-				<br/><br/>
-			</div>
-		</div>
-		</div>
 	</section>
+
+
+{% if userbooks %}
+	<center>
+	{% if self_profile %}
+		<h1>My books:</h1>
+	{% else %}
+		<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }}'s books:</h3>
+	{% endif %}
+	</center>
+	<br/>
+	<div id="example" class="example pagespan">
+	<div class="scrollbar">
+		<div class="handle">
+			<div class="mousearea"></div>
+		</div>
+	</div>
+
+	<button class="backward"><i class="icon-angle-left"></i></button>
+	<button class="forward"><i class="icon-angle-right"></i></button>
+
+	<div class="frame">
+		<ul>
+		{% for book in userbooks %}
+			<li style="display: inline;">
+			<div style="width: auto; height: 100%;">
+		    <img src="{{book.image_url}}" style="width: 350px; height: 300px; margin: 0px;"/>
+		    <div style="padding: 10px; display: block; font-size: 20pt; line-height: 30px; text-align: left">
+		    <br/>
+		    <b>Book name: </b>{{book.orig_book.name}} <br/>
+		    <b>Lending Duration: </b>{{book.lending_time}} days<br/>
+		    <b>Book condition: </b>{{book.condition}}
+		    </div>
+	        {% if self_profile %}
+	        	<button disabled class="button small" onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
+	        {% else %}
+	            <button class="button small" onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrow It!</button>
+	        {% endif %}
+	        <br>
+	        </div>
+	        </li>
+		{% endfor %}
+		</ul>
+	</div>
+
+	<div class="controls">
+		<button data-action="toStart"><i class="icon-double-angle-left"></i> Start</button>
+		<span class="divider"></span>
+		<button class="prev"><i class="icon-angle-left"></i> Prev</button>
+		<span class="divider"></span>
+		<span class="divider"></span>
+		<button class="next">Next <i class="icon-angle-right"></i></button>
+		<span class="divider"></span>
+		<button data-action="toEnd">End <i class="icon-double-angle-right"></i></button>
+	</div>
+</div>
+	
+{% else %}
+	<br/>
+	{% if self_profile %}
+		<h3>You have no books available for lending.</h3>
+		<a href="/lend" class="button big">Lend a Book</a>
+	{% else %}
+		<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }} has no available books for lending.</h3>
+	{% endif %}
+{% endif %}
+
+
 
  <div class="push"></div>
 
