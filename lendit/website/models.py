@@ -19,14 +19,14 @@ class LenditUser(models.Model):
 
 
 class UserBook(models.Model):
-    STATUS = (('lent', 'lent'), ('unlent','unlent'))
+    STATUS = (('Lent', 'Lent'), ('Available','Available'))
     user = models.ForeignKey('LenditUser')
     orig_book = models.ForeignKey('Book')
     desc = models.CharField(max_length=1000)
     condition = models.CharField(max_length=100)
     lending_time = models.IntegerField()
     image_url = models.URLField()
-    status = models.CharField(max_length=10, choices=STATUS)
+    status = models.CharField(max_length=10, choices=STATUS, default="Available")
 
 
 class Borrowed(models.Model):
