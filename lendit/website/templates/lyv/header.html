@@ -24,7 +24,7 @@
 					</div>
 				</li>
 				<li>
-				{% if user.lendituser.new_notifications == 0 %}
+				{% if user.lendituser.new_notifications != 0 %}
 				<a style="display: inline-flex;" href="/notifications" title="{{user.lendituser.new_notifications}} new notifications">
 				<img style="width: 24px; height: 24px;" src="/static/lyv/images/notifications.svg">
 				</a>
