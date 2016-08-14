@@ -8,7 +8,12 @@
 			<li><a href="/#two">Books</a></li>
 			<li><a href="/#two">Movies</a></li>
 			<li><a href="/#two">Games</a></li>
-			<li><a href="/lend" class="button small">Lend</a></li>
+			{% if user and not user.is_anonymous %}
+				<li><a href="/lend" class="button small">Lend</a></li>
+
+			{% else %}
+				<li><a href="/login" class="button small">Lend</a></li>
+			{% endif %}
 			<li><a href="/#two" class="button small">Borrow</a></li>
 			{% if user and not user.is_anonymous %}
 				<li>
@@ -19,7 +24,7 @@
 						</button>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 							<li><a href="/profile/{{ user.id }}">Dashboard</a></li>
-							<li><a href="{% url 'auth:logout' %}?next={{ request.get_full_path }}">Log Out</a>
+							<li><a href="{% url 'auth:logout' %}?next=/">Log Out</a>
 						</ul>
 					</div>
 				</li>
