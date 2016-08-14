@@ -1,98 +1,130 @@
-<!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
 	<title>Notifications</title>
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script type="text/javascript">
-	function onclickaccept(notifid) {
-		console.log("Accept " + notifid);
-		$.ajax({
-			beforeSend: function(xhr, settings) {
-			         function getCookie(name) {
-			             var cookieValue = null;
-			             if (document.cookie && document.cookie != '') {
-			                 var cookies = document.cookie.split(';');
-			                 for (var i = 0; i < cookies.length; i++) {
-			                     var cookie = jQuery.trim(cookies[i]);
-			                     // Does this cookie string begin with the name we want?
-			                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-			                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-			                         break;
-			                     }
-			                 }
-			             }
-			             return cookieValue;
-			         }
-			         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-			             // Only send the token to relative URLs i.e. locally.
-			             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-			         }
-			     },
-			url: "/request-handle",
-			method: 'POST',
-			data: {'notifid': notifid,
-				   'action': 'accept'}
-		}).done(function(data) {
-			console.log(data);
-		}).fail(function(a, b) {
-			console.log(a);
-			console.log(b);
-		});
-	}
-	function onclickdecline(notifid) {
-		console.log("Decline " + notifid);
-		$.ajax({
-			beforeSend: function(xhr, settings) {
-			         function getCookie(name) {
-			             var cookieValue = null;
-			             if (document.cookie && document.cookie != '') {
-			                 var cookies = document.cookie.split(';');
-			                 for (var i = 0; i < cookies.length; i++) {
-			                     var cookie = jQuery.trim(cookies[i]);
-			                     // Does this cookie string begin with the name we want?
-			                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-			                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-			                         break;
-			                     }
-			                 }
-			             }
-			             return cookieValue;
-			         }
-			         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-			             // Only send the token to relative URLs i.e. locally.
-			             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-			         }
-			     },
-			url: "/request-handle",
-			method: 'POST',
-			data: {'notifid': notifid,
-				   'action': 'decline'}
-		}).done(function(data) {
-			console.log(data);
-		}).fail(function(a, b) {
-			console.log(a);
-			console.log(b);
-		});
-	}
-</script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="/static/lyv/js/skel.min.js"></script>
+	<script src="/static/lyv/js/skel-layers.min.js"></script>
+	<script src="/static/lyv/js/init.js"></script>
+
+	<noscript>
+		<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+		<link rel="stylesheet" href="/static/lyv/css/style.css" />
+		<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+		<link rel="stylesheet" href="/static/lyv/css/font-awesome.min.css">
+	</noscript>
+	<style type="text/css">
+		@import url("https://fonts.googleapis.com/css?family=Raleway:200,700|Source+Sans+Pro:300,600,300italic,600italic");
+		.signuptext {
+			font-family: "Raleway", Helvetica, sans-serif;
+		}
+	</style>
+
+	<script type="text/javascript">
+		function onclickaccept(notifid) {
+			console.log("Accept " + notifid);
+			$.ajax({
+				beforeSend: function(xhr, settings) {
+				         function getCookie(name) {
+				             var cookieValue = null;
+				             if (document.cookie && document.cookie != '') {
+				                 var cookies = document.cookie.split(';');
+				                 for (var i = 0; i < cookies.length; i++) {
+				                     var cookie = jQuery.trim(cookies[i]);
+				                     // Does this cookie string begin with the name we want?
+				                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				                         break;
+				                     }
+				                 }
+				             }
+				             return cookieValue;
+				         }
+				         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+				             // Only send the token to relative URLs i.e. locally.
+				             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+				         }
+				     },
+				url: "/request-handle",
+				method: 'POST',
+				data: {'notifid': notifid,
+					   'action': 'accept'}
+			}).done(function(data) {
+				console.log(data);
+			}).fail(function(a, b) {
+				console.log(a);
+				console.log(b);
+			});
+		}
+		function onclickdecline(notifid) {
+			console.log("Decline " + notifid);
+			$.ajax({
+				beforeSend: function(xhr, settings) {
+				         function getCookie(name) {
+				             var cookieValue = null;
+				             if (document.cookie && document.cookie != '') {
+				                 var cookies = document.cookie.split(';');
+				                 for (var i = 0; i < cookies.length; i++) {
+				                     var cookie = jQuery.trim(cookies[i]);
+				                     // Does this cookie string begin with the name we want?
+				                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				                         break;
+				                     }
+				                 }
+				             }
+				             return cookieValue;
+				         }
+				         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+				             // Only send the token to relative URLs i.e. locally.
+				             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+				         }
+				     },
+				url: "/request-handle",
+				method: 'POST',
+				data: {'notifid': notifid,
+					   'action': 'decline'}
+			}).done(function(data) {
+				console.log(data);
+			}).fail(function(a, b) {
+				console.log(a);
+				console.log(b);
+			});
+		}
+	</script>
+	</head>
+
 <body>
-<ul>
-{% for notif in notifications %}
-<li>
-{% if notif.type == 'r' %}
-<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-<button onclick="onclickaccept({{notif.id}});">Accept</button>
-<button onclick="onclickdecline({{notif.id}});">Decline</button>
-{% endif %}
-{% if notif.type == 'a' %}
-<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-{% endif %}
-{% if notif.type == 'd' %}
-<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-{% endif %}
-</li>
-{% endfor %}
-</ul>
+<div id="wrapper">
+	{% include "lyv/header.html" %}
+	<ul>
+	{% for notif in notifications %}
+	<li>
+	{% if notif.type == 'r' %}
+	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+	<button onclick="onclickaccept({{notif.id}});">Accept</button>
+	<button onclick="onclickdecline({{notif.id}});">Decline</button>
+	{% endif %}
+	{% if notif.type == 'a' %}
+	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+	{% endif %}
+	{% if notif.type == 'd' %}
+	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+	{% endif %}
+	</li>
+	{% endfor %}
+	</ul>
+		
+</div>
+	{% include "lyv/footer.html" %}
+
+	<!-- {% include "lyv/loginmodal.html" %} -->
+	
 </body>
 </html>
