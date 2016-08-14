@@ -86,7 +86,7 @@ def request_handle(request):
 						 other_user=request.user.lendituser,
 						 book=notification.book,
 						 type='a',
-						 desc='',
+						 desc='Contact Number- ' + str(request.POST["phno"]),
 						 read=0).save()
 			notification.other_user.new_notifications += 1
 			notification.other_user.save()
