@@ -74,3 +74,7 @@ def notifications(request):
 	return render(request, 'notifications.html', {
 		'notifications': notifications
 		})
+
+def request_handle(request):
+	if request.method == 'POST':
+		return HttpResponse(request.POST["notifid"] + request.POST["action"])
