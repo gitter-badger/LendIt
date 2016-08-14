@@ -97,6 +97,7 @@ def request_handle(request):
 			borrowed_entry.save()
 			notification.book.status = 'Lent'
 			notification.book.save()
+			notification.delete()
 		if request.POST['action'] == 'decline':
 			Notification(user=notification.other_user,
 						 other_user=request.user.lendituser,
@@ -111,4 +112,5 @@ def request_handle(request):
 													 book=notification.book)[0]
 			borrowed_entry.accepted = 1
 			borrowed_entry.save()
+			notification.delete()
 		return HttpResponse("Handled")
