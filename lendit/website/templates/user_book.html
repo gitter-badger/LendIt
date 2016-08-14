@@ -18,7 +18,11 @@ Lending time : {{book.lending_time}}
 <br/>
 Status : {{book.status}}
 <br/>
-<button onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Lend It!</button>
+{% if not request.user.is_anonymous %}
+	<button onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Request Book</button>
+{% else %}
+	<button onclick='document.location.href="/login?next={{ request.get_full_path }}"'>Request Book</button>
+{% endif %}
 
 </body>
 </html>

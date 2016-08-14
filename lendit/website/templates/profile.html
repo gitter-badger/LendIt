@@ -176,7 +176,7 @@ jQuery(function ($) {
                         <button disabled>Request Sent</button>
                     {% endif %}
                 {% else %}
-                    <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Borrowed It!</button>
+                    <button onclick="document.location.href='/book/{{lenuser.id}}/{{book.orig_book.id}}';">Request Book</button>
                 {% endif %}
 	        {% endif %}
 	        <br>
@@ -200,12 +200,16 @@ jQuery(function ($) {
 	
 {% else %}
 	<br/>
+	<div class="container 50%">
+		<center>
 	{% if self_profile %}
 		<h3>You have no books available for lending.</h3>
-		<a href="/lend" class="button big">Lend a Book</a>
+		<a href="/lend" class="button big ">Lend a Book</a>
 	{% else %}
 		<h3>{{lenuser.user.first_name}}&nbsp;{{ lenuser.user.last_name }} has no available books for lending.</h3>
 	{% endif %}
+		</center>
+	</div>
 {% endif %}
 
 
@@ -213,8 +217,6 @@ jQuery(function ($) {
  <div class="push"></div>
 
 </div>
-<div>
 	{% include "lyv/footer.html" %}
-</div>
 </body>
 </html>

@@ -63,6 +63,7 @@ def request_book(request, user_pk, book_pk):
 	Notification(user=lender, other_user=request.user.lendituser, book=userbook, type='r', desc='',read=0).save()
 	Borrowed(user=request.user.lendituser, lender=lender, book=userbook, accepted=0).save()
 	lender.new_notifications = lender.new_notifications + 1
+	lender.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -71,6 +72,7 @@ def notifications(request):
 	for notification in notifications:
 		notification.read = 1
 	request.user.lendituser.new_notifications = 0
+	request.user.lendituser.save()
 	return render(request, 'notifications.html', {
 		'notifications': notifications
 		})
@@ -93,6 +95,8 @@ def request_handle(request):
 													 book=notification.book)[0]
 			borrowed_entry.accepted = 1;
 			borrowed_entry.save()
+			notification.book.status = 'Lent'
+			notification.book.save()
 		if request.POST['action'] == 'decline':
 			Notification(user=notification.other_user,
 						 other_user=request.user.lendituser,
