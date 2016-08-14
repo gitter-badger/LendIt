@@ -16,6 +16,7 @@ class LenditUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic_url = models.URLField()
     email = models.EmailField()
+    new_notifications = models.IntegerField(default=0)
 
 
 class UserBook(models.Model):

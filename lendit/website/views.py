@@ -60,10 +60,15 @@ def request_book(request, user_pk, book_pk):
 	userbook = UserBook.objects.filter(id=book_pk)[0]
 	Notification(user=lender, other_user=request.user.lendituser, book=userbook, type='r', desc='',read=0).save()
 	Borrowed(user=request.user.lendituser, lender=lender, book=userbook, accepted=0).save()
+	lender.new_notifications = lender.new_notifications + 1
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def notifications(request):
+	notifications = Notification.objects.filter(user=request.user.lendituser)
+	for notification in notifications:
+		notification.read = 1
+	request.user.lendituser.new_notifications = 0
 	return render(request, 'notifications.html', {
-		'notifications': Notification.objects.filter(user=request.user.lendituser)
+		'notifications': notifications
 		})
