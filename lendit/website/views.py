@@ -112,7 +112,6 @@ def request_handle(request):
 			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
 													 lender=request.user.lendituser,
 													 book=notification.book)[0]
-			borrowed_entry.accepted = 1
-			borrowed_entry.save()
+			borrowed_entry.delete()
 			notification.delete()
 		return HttpResponse("Handled")
