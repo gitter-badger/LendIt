@@ -40,7 +40,15 @@
 				<img src="{{book.image_url}}">
 				<br/><br/>
 				{% if userbooks %}
+					{% if userbooks|length == 1 %}
+						{% for userbook in userbooks %}
+							{% if userbook.user.user != request.user %}
+								<h3>No lender around you at this moment.</h3>
+							{%endif%}
+						{%endfor%}
+					{% else %}
 					<h2>Lenders around you</h2>
+					{% endif %}
 				{% else %}
 					<h3>No lender around you at this moment.</h3>
 				{% endif %}
