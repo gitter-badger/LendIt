@@ -93,7 +93,7 @@ def request_handle(request):
 			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
 													 lender=request.user.lendituser,
 													 book=notification.book)[0]
-			borrowed_entry.accepted = 1;
+			borrowed_entry.accepted = 1
 			borrowed_entry.save()
 			notification.book.status = 'Lent'
 			notification.book.save()
@@ -109,6 +109,6 @@ def request_handle(request):
 			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
 													 lender=request.user.lendituser,
 													 book=notification.book)[0]
-			borrowed_entry.accepted = 1;
+			borrowed_entry.accepted = 1
 			borrowed_entry.save()
 		return HttpResponse("Handled")
