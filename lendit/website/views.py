@@ -77,6 +77,38 @@ def notifications(request):
 		'notifications': notifications
 		})
 
+
 def request_handle(request):
 	if request.method == 'POST':
-		return HttpResponse(request.POST["notifid"] + request.POST["action"])
+		notification = Notification.objects.filter(pk=int(request.POST["notifid"]))[0]
+		if request.POST['action'] == 'accept':
+			Notification(user=notification.other_user,
+						 other_user=request.user.lendituser,
+						 book=notification.book,
+						 type='a',
+						 desc='',
+						 read=0).save()
+			notification.other_user.new_notifications += 1
+			notification.other_user.save()
+			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
+													 lender=request.user.lendituser,
+													 book=notification.book)[0]
+			borrowed_entry.accepted = 1
+			borrowed_entry.save()
+			notification.book.status = 'Lent'
+			notification.book.save()
+		if request.POST['action'] == 'decline':
+			Notification(user=notification.other_user,
+						 other_user=request.user.lendituser,
+						 book=notification.book,
+						 type='d',
+						 desc='',
+						 read=0).save()
+			notification.other_user.new_notifications += 1
+			notification.other_user.save()
+			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
+													 lender=request.user.lendituser,
+													 book=notification.book)[0]
+			borrowed_entry.accepted = 1
+			borrowed_entry.save()
+		return HttpResponse("Handled")
