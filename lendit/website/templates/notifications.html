@@ -120,10 +120,10 @@
 					<button class="button special small" onclick="onclickdecline({{notif.id}});">Decline</button>
 					{% endif %}
 					{% if notif.type == 'a' %}
-					<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
 					{% endif %}
 					{% if notif.type == 'd' %}
-					<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
 					{% endif %}
 					<br/>
 					</li>
