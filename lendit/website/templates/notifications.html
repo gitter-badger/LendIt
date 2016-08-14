@@ -27,8 +27,6 @@
 	</style>
 
 	<script type="text/javascript">
-		var phoneNumber = false;
-		var message = false;
 		function getCookie(name) {
 		    var cookieValue = null;
 		    if (document.cookie && document.cookie != '') {
@@ -46,8 +44,8 @@
 		}
 
 		function getMessage() {
-			phoneNumber = $("#phno").val();
-			message = $("#message").val();
+			var phoneNumber = $("#phno").val();
+			var message = $("#message").val();
 			$("#myModal").modal('hide');
 		}
 
@@ -150,9 +148,9 @@
 	        <h4 class="modal-title">Send a message to the borrower</h4>
 	      </div>
 	      <div class="modal-body">
-	        <span>Enter your contact number - </span>
+	        <span>Enter your contact number<span style="color: red;">*</span> - </span>
 	        <input type="number" id="phno"> <br/>
-	        <span>Enter a message - </span>
+	        <span>Enter a message<span style="color: red;">*</span> - </span>
 	        <textarea id="message" style="border:solid 1px black;"></textarea>
 	      </div>
 	      <div class="modal-footer">
