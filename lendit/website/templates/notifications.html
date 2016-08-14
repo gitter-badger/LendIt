@@ -3,18 +3,93 @@
 <head>
 	<title>Notifications</title>
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function onclickaccept(notifid) {
+		console.log("Accept " + notifid);
+		$.ajax({
+			beforeSend: function(xhr, settings) {
+			         function getCookie(name) {
+			             var cookieValue = null;
+			             if (document.cookie && document.cookie != '') {
+			                 var cookies = document.cookie.split(';');
+			                 for (var i = 0; i < cookies.length; i++) {
+			                     var cookie = jQuery.trim(cookies[i]);
+			                     // Does this cookie string begin with the name we want?
+			                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+			                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			                         break;
+			                     }
+			                 }
+			             }
+			             return cookieValue;
+			         }
+			         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			             // Only send the token to relative URLs i.e. locally.
+			             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			         }
+			     },
+			url: "/request-handle",
+			method: 'POST',
+			data: {'notifid': notifid,
+				   'action': 'accept'}
+		}).done(function(data) {
+			console.log(data);
+		}).fail(function(a, b) {
+			console.log(a);
+			console.log(b);
+		});
+	}
+	function onclickdecline(notifid) {
+		console.log("Decline " + notifid);
+		$.ajax({
+			beforeSend: function(xhr, settings) {
+			         function getCookie(name) {
+			             var cookieValue = null;
+			             if (document.cookie && document.cookie != '') {
+			                 var cookies = document.cookie.split(';');
+			                 for (var i = 0; i < cookies.length; i++) {
+			                     var cookie = jQuery.trim(cookies[i]);
+			                     // Does this cookie string begin with the name we want?
+			                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+			                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+			                         break;
+			                     }
+			                 }
+			             }
+			             return cookieValue;
+			         }
+			         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			             // Only send the token to relative URLs i.e. locally.
+			             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			         }
+			     },
+			url: "/request-handle",
+			method: 'POST',
+			data: {'notifid': notifid,
+				   'action': 'decline'}
+		}).done(function(data) {
+			console.log(data);
+		}).fail(function(a, b) {
+			console.log(a);
+			console.log(b);
+		});
+	}
+</script>
 <body>
 <ul>
 {% for notif in notifications %}
 <li>
 {% if notif.type == 'r' %}
-<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="#">{{notif.book.orig_book.name}}</a>.
+<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+<button onclick="onclickaccept({{notif.id}});">Accept</button>
+<button onclick="onclickdecline({{notif.id}});">Decline</button>
 {% endif %}
 {% if notif.type == 'a' %}
-<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="#">{{notif.book.orig_book.name}}</a>.
+<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
 {% endif %}
 {% if notif.type == 'd' %}
-<a href="#">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="#">{{notif.book.orig_book.name}}</a>.
+<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
 {% endif %}
 </li>
 {% endfor %}
