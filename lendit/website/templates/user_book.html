@@ -1,28 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+	<head>
 	<title>{{book.orig_book.name}}</title>
-</head>
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="/static/lyv/js/skel.min.js"></script>
+		<script src="/static/lyv/js/skel-layers.min.js"></script>
+		<script src="/static/lyv/js/init.js"></script>
+
+		<noscript>
+			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style.css" />
+			<link rel="stylesheet" href="/static/lyv/css/style-xlarge.css" />
+			<link rel="stylesheet" href="/static/lyv/css/font-awesome.min.css">
+		</noscript>
+		<style type="text/css">
+			@import url("https://fonts.googleapis.com/css?family=Raleway:200,700|Source+Sans+Pro:300,600,300italic,600italic");
+			.signuptext {
+				font-family: "Raleway", Helvetica, sans-serif;
+			}
+		</style>
+	</head>
+
 <body>
-{{book.orig_book.name}}
-<img src="{{book.image_url}}">
+<div id="wrapper">
+	{% include "lyv/header.html" %}
 
-<br/>
-Lender name : {{lender.user.first_name}} {{lender.user.last_name}}
-<br/>
-Condition : {{book.condition}}
-<br/>
-Description : {{book.desc}}
-<br/>
-Lending time : {{book.lending_time}}
-<br/>
-Status : {{book.status}}
-<br/>
-{% if not request.user.is_anonymous %}
-	<button onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Request Book</button>
-{% else %}
-	<button onclick='document.location.href="/login?next={{ request.get_full_path }}"'>Request Book</button>
-{% endif %}
 
+
+<section id="two" class="wrapper style2 special">
+		<div class="container 50%">
+		<h1>{{book.orig_book.name}}</h1>
+		<img style="width: 50%" src="{{book.image_url}}">
+		<br/><br/>
+		<div class="row uniform">
+			<div class="12u$">
+				<div>
+				<b>Lender name :</b> {{lender.user.first_name}} {{lender.user.last_name}}
+				<br/>
+				<b>Condition :</b> {{book.condition}}
+				<br/>
+				<b>Description :</b> {{book.desc}}
+				<br/>
+				<b>Lending time :</b> {{book.lending_time}}
+				<br/>
+				<b>Status :</b> {{book.status}}
+				<br/>
+				</div>
+				{% if not request.user.is_anonymous %}
+					<button class="button" onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Request Book</button>
+				{% else %}
+					<button class="button" onclick='document.location.href="/login?next={{ request.get_full_path }}"'>Request Book</button>
+				{% endif %}
+			</div>
+		</div>
+
+</section>
+
+</div>
+	{% include "lyv/footer.html" %}
+	
 </body>
 </html>

@@ -39,7 +39,9 @@
 				<h2>{{book.name}}</h2>
 				<img src="{{book.image_url}}">
 				<br/><br/>
-				<h2>Lenders around you</h2>
+				{% if userbooks %}
+					<h2>Lenders around you</h2>
+				{% endif %}
 			</header>
 			<div class="row 150%" style="display: flex">
 				{% for userbook in userbooks %}
@@ -65,7 +67,6 @@
 	</section>
 </div>
 	{% include "lyv/footer.html" %}
-	<!-- {% include "lyv/loginmodal.html" %} -->
 	
 </body>
 </html>
