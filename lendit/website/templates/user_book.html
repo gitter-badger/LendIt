@@ -53,8 +53,15 @@
 				<br/>
 				</div>
 				{% if not request.user.is_anonymous %}
-					{% if Notifications.objects.filter(user=) %}
-					<button class="button" onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Request Book</button>
+					{% if notif.0 %}
+						{% if notif.0.0.accepted %}
+							<button class="button" disabled>Borrowed</button>
+						{% else %}
+							<button class="button" disabled>Request Sent</button>
+						{% endif %}
+					{% else %}
+						<button class="button" onclick="document.location.href='../../request_book/{{lender.id}}/{{book.id}}'">Request Book</button>
+					{% endif %}
 				{% else %}
 					<button class="button" onclick='document.location.href="/login?next={{ request.get_full_path }}"'>Request Book</button>
 				{% endif %}

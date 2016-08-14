@@ -39,7 +39,8 @@ def user_book(request, user_pk, book_pk):
 	book = Book.objects.filter(id=book_pk)[0]
 	lender = LenditUser.objects.filter(id=user_pk)[0]
 	userbook = UserBook.objects.filter(user=lender, orig_book=book)[0]
-	return render(request, 'user_book.html', {'book': userbook, 'lender': lender})
+	notif = Borrowed.objects.filter(user=request.user.lendituser, lender=lender, book=userbook),
+	return render(request, 'user_book.html', {'book': userbook, 'lender': lender, 'notif': notif})
 
 
 def profile(request, pk):
