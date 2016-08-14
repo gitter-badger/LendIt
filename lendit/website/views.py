@@ -68,7 +68,7 @@ def request_book(request, user_pk, book_pk):
 
 
 def notifications(request):
-	notifications = Notification.objects.filter(user=request.user.lendituser)
+	notifications = Notification.objects.filter(user=request.user.lendituser).order_by('-id')
 	for notification in notifications:
 		notification.read = 1
 	request.user.lendituser.new_notifications = 0
