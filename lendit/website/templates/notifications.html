@@ -54,27 +54,25 @@
 		function onclickaccept(notifid) {
 			console.log("Accept " + notifid);
 			$("#myModal").modal('show');
-			if(phoneNumber && message) {
-				$.ajax({
-					beforeSend: function(xhr, settings) {
-				        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-				            // Only send the token to relative URLs i.e. locally.
-				            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-				        }
-				     },
-					url: "/request-handle",
-					method: 'POST',
-					data: {'notifid': notifid,
-						   'action': 'accept',
-						   'phno': phoneNumber,
-						   'message': message}
-				}).done(function(data) {
-					console.log(data);
-				}).fail(function(a, b) {
-					console.log(a);
-					console.log(b);
-				});
-			}
+			$.ajax({
+				beforeSend: function(xhr, settings) {
+			        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			            // Only send the token to relative URLs i.e. locally.
+			            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			        }
+			     },
+				url: "/request-handle",
+				method: 'POST',
+				data: {'notifid': notifid,
+					   'action': 'accept',
+					   'phno': phoneNumber,
+					   'message': message}
+			}).done(function(data) {
+				console.log(data);
+			}).fail(function(a, b) {
+				console.log(a);
+				console.log(b);
+			});
 		}
 		function onclickdecline(notifid) {
 			console.log("Decline " + notifid);
