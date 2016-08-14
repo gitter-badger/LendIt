@@ -44,6 +44,8 @@ def user_book(request, user_pk, book_pk):
 
 def profile(request, pk):
 	lendituser = LenditUser.objects.filter(id=pk)[0]
+	if request.user.is_anonymous():
+		return HttpResponseRedirect("/login")
 	self_profile = request.user == lendituser.user
 	user_books = UserBook.objects.filter(user=lendituser)
 	borrowed_or_not = []
