@@ -103,23 +103,38 @@
 <body>
 <div id="wrapper">
 	{% include "lyv/header.html" %}
-	<ul>
-	{% for notif in notifications %}
-	<li>
-	{% if notif.type == 'r' %}
-	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> requested <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-	<button onclick="onclickaccept({{notif.id}});">Accept</button>
-	<button onclick="onclickdecline({{notif.id}});">Decline</button>
-	{% endif %}
-	{% if notif.type == 'a' %}
-	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-	{% endif %}
-	{% if notif.type == 'd' %}
-	<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
-	{% endif %}
-	</li>
-	{% endfor %}
-	</ul>
+
+	<section id="two" class="wrapper style2 special">
+		<div class="container 50%">
+		<h1>Notifications</h1>
+		<div class="row uniform">
+			<div class="12u$">
+				<ul style="list-style: none;">
+					{% for notif in notifications %}
+					<li style="border: 2px solid black; padding: 10px;">
+					{% if notif.type == 'r' %}
+					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> requested <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					<br/>
+					<button class="button small" onclick="onclickaccept({{notif.id}});">Accept</button>
+					<button class="button special small" onclick="onclickdecline({{notif.id}});">Decline</button>
+					{% endif %}
+					{% if notif.type == 'a' %}
+					<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					{% endif %}
+					{% if notif.type == 'd' %}
+					<a href="/profile/{{notif.other_user.id}}">{{notif.other_user.user.first_name}} {{notif.other_user.user.last_name}}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					{% endif %}
+					<br/>
+					</li>
+					<br/>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+
+	</section>
+	
 		
 </div>
 	{% include "lyv/footer.html" %}
