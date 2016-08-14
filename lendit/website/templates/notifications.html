@@ -28,6 +28,7 @@
 
 	<script type="text/javascript">
 		var phoneNumber = false;
+		var message = false;
 		function getCookie(name) {
 		    var cookieValue = null;
 		    if (document.cookie && document.cookie != '') {
@@ -44,16 +45,16 @@
 		    return cookieValue;
 		}
 
-		function getContactNumber() {
+		function getMessage() {
 			phoneNumber = $("#phno").val();
-			console.log(phoneNumber);
+			message = $("#message").val();
 			$("#myModal").modal('hide');
 		}
 
 		function onclickaccept(notifid) {
 			console.log("Accept " + notifid);
 			$("#myModal").modal('show');
-			if(phoneNumber) {
+			if(phoneNumber && message) {
 				$.ajax({
 					beforeSend: function(xhr, settings) {
 				        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
@@ -65,7 +66,8 @@
 					method: 'POST',
 					data: {'notifid': notifid,
 						   'action': 'accept',
-						   'phno': phoneNumber}
+						   'phno': phoneNumber,
+						   'message': message}
 				}).done(function(data) {
 					console.log(data);
 				}).fail(function(a, b) {
@@ -119,7 +121,7 @@
 					{% endif %}
 					{% if notif.type == 'a' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
-					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}<br/>{{notif.desc}}</a>.
 					{% endif %}
 					{% if notif.type == 'd' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
@@ -147,14 +149,16 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Modal Header</h4>
+	        <h4 class="modal-title">Send a message to the borrower</h4>
 	      </div>
 	      <div class="modal-body">
 	        <span>Enter your contact number - </span>
-	        <input type="number" id="phno">
+	        <input type="number" id="phno"> <br/>
+	        <span>Enter a message - </span>
+	        <textarea id="message" style="border:solid 1px black;"></textarea>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" onclick="getContactNumber();">Send</button>
+	        <button type="button" class="btn btn-default" onclick="getMessage();">Send</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>

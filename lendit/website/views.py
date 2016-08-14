@@ -68,7 +68,7 @@ def request_book(request, user_pk, book_pk):
 
 
 def notifications(request):
-	notifications = Notification.objects.filter(user=request.user.lendituser)
+	notifications = Notification.objects.filter(user=request.user.lendituser).order_by('-id')
 	for notification in notifications:
 		notification.read = 1
 	request.user.lendituser.new_notifications = 0
@@ -86,7 +86,8 @@ def request_handle(request):
 						 other_user=request.user.lendituser,
 						 book=notification.book,
 						 type='a',
-						 desc='Contact Number- ' + str(request.POST["phno"]),
+						 desc='Contact Number- ' + str(request.POST["phno"]) \
+						 	  +'\nMessage- ' + (request.POST["message"]),
 						 read=0).save()
 			notification.other_user.new_notifications += 1
 			notification.other_user.save()
@@ -97,6 +98,7 @@ def request_handle(request):
 			borrowed_entry.save()
 			notification.book.status = 'Lent'
 			notification.book.save()
+			notification.delete()
 		if request.POST['action'] == 'decline':
 			Notification(user=notification.other_user,
 						 other_user=request.user.lendituser,
@@ -111,4 +113,5 @@ def request_handle(request):
 													 book=notification.book)[0]
 			borrowed_entry.accepted = 1
 			borrowed_entry.save()
+			notification.delete()
 		return HttpResponse("Handled")
