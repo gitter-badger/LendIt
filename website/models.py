@@ -22,7 +22,7 @@ class LenditUser(models.Model):
     new_notifications = models.IntegerField(default=0)
     lat = models.DecimalField(default=0, decimal_places=3, max_digits=7)
     long = models.DecimalField(default=0, decimal_places=3, max_digits=7)
-    rating = models.IntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(0)])
+    rating = models.IntegerField(default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
 
 
 class UserBook(models.Model):
