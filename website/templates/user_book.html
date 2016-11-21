@@ -41,13 +41,13 @@
 		<div class="row uniform">
 			<div class="12u$">
 				<div>
-				<b>Lender name :</b> {{lender.user.first_name}} {{lender.user.last_name}}
+				<b>Lender name :</b> <a href="{%  url 'profile' lender.user.pk %}">{{lender.user.first_name}} {{lender.user.last_name}}</a>
 				<br/>
 				<b>Condition :</b> {{book.condition}}
 				<br/>
 				<b>Description :</b> {{book.desc}}
 				<br/>
-				<b>Lending time :</b> {{book.lending_time}}
+				<b>Lending time :</b> {{book.lending_time}} days
 				<br/>
 				<b>Status :</b> {{book.status}}
 				<br/>
