@@ -17,6 +17,8 @@ class LenditUser(models.Model):
     profile_pic_url = models.URLField()
     email = models.EmailField()
     new_notifications = models.IntegerField(default=0)
+    lat = models.DecimalField(default=0, decimal_places=3, max_digits=7)
+    long = models.DecimalField(default=0, decimal_places=3, max_digits=7)
 
 
 class UserBook(models.Model):
