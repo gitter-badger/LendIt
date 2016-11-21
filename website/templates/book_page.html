@@ -21,7 +21,7 @@
 				map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
 				    credentials: 'AtiNL67ZpqYBWmnhCsdMCsdOpDP9WqLCTf239s4EvHgMjZUj-Jfa1BW4uaLq-MUa',
 				    center: new Microsoft.Maps.Location({{request.user.lendituser.lat}}, {{request.user.lendituser.long}}),
-				    zoom: 10
+				    zoom: 15
 				});
 				var myLocationPin = new Microsoft.Maps.Pushpin(
 			    	map.getCenter(), {color: 'blue'});
