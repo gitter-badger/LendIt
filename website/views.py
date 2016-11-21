@@ -6,6 +6,7 @@ from website.models import *
 import random
 from django.views.decorators.csrf import csrf_exempt
 
+import json
 
 # Create your views here.
 
@@ -35,7 +36,19 @@ def lend(request):
 def book(request, pk):
 	book = Book.objects.filter(id=pk)[0]
 	user_books = list(UserBook.objects.filter(orig_book=book))
-	return render(request, 'book_page.html', {'book': book, 'userbooks': user_books})
+	lenders = []
+	for user_book in user_books:
+		if user_book.user.user != request.user:
+			lender = {
+				'userid': int(user_book.user.id),
+				'lat': float(user_book.user.lat),
+				'long': float(user_book.user.long),
+				'first_name': str(user_book.user.user.first_name),
+				'last_name': str(user_book.user.user.last_name),
+				'small_pic_url': str(user_book.user.small_pic_url)
+			}
+			lenders.append(lender)
+	return render(request, 'book_page.html', {'book': book, 'userbooks': user_books, 'lenders': str(lenders)})
 
 
 def user_book(request, user_pk, book_pk):
