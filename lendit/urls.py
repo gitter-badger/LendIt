@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.user_book, name='user_book'),
     url(r'^profile/(?P<pk>\S+)/$', views.profile, name='profile'),
     url(r'^request_book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.request_book, name='request_book'),
+    url(r'^return_book/(?P<user_pk>\S+)/(?P<book_pk>\S+)$', views.return_book, name='return_book'),
     url(r'^notifications/$', views.notifications, name='notifications'),
     url(r'^request-handle$', views.request_handle, name='request_handle'),
     url(r'^update_location$', views.update_location, name='update_location')

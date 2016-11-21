@@ -54,12 +54,12 @@
 			onclickaccept();
 		}
 
-		function generateOTP(notifid) {
-			console.log("generateOTP " + notifid);
+		function generateLendingOTP(notifid) {
+			console.log("generateLendingOTP " + notifid);
 			var otp = String(Math.floor((Math.random() * 1000000)));
-			document.getElementById("OTP").innerHTML=otp;
-			document.getElementById("OTP").className += " alt";
-			document.getElementById("OTP").disabled = true;
+			document.getElementById("LendingOTP").innerHTML=otp;
+			document.getElementById("LendingOTP").className += " alt";
+			document.getElementById("LendingOTP").disabled = true;
 
 			$.ajax({
 				beforeSend: function(xhr, settings) {
@@ -71,7 +71,7 @@
 				url: "/request-handle",
 				method: 'POST',
 				data: {'notifid': notifid,
-					   'action': 'generateOTP',
+					   'action': 'generateLendingOTP',
 					   'otp': otp}
 			}).done(function(data) {
 				console.log(data);
@@ -81,8 +81,35 @@
 			});
 		}
 
-		function confirmOTP(notifid, actual_otp) {
-			entered_otp = document.getElementById('inputOTP').value;
+		function generateReturnOTP(notifid) {
+			console.log("generateReturnOTP " + notifid);
+			var otp = String(Math.floor((Math.random() * 1000000)));
+			document.getElementById("ReturnOTP").innerHTML=otp;
+			document.getElementById("ReturnOTP").className += " alt";
+			document.getElementById("ReturnOTP").disabled = true;
+
+			$.ajax({
+				beforeSend: function(xhr, settings) {
+			        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			            // Only send the token to relative URLs i.e. locally.
+			            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			        }
+			     },
+				url: "/request-handle",
+				method: 'POST',
+				data: {'notifid': notifid,
+					   'action': 'generateReturnOTP',
+					   'otp': otp}
+			}).done(function(data) {
+				console.log(data);
+			}).fail(function(a, b) {
+				console.log(a);
+				console.log(b);
+			});
+		}
+
+		function confirmLendingOTP(notifid, actual_otp) {
+			entered_otp = document.getElementById('inputLendingOTP').value;
 			console.log(entered_otp + actual_otp);
 			if (entered_otp == actual_otp) {
 				alert("Transaction Complete");
@@ -98,7 +125,37 @@
 					url: "/request-handle",
 					method: 'POST',
 					data: {'notifid': notifid,
-						   'action': 'complete'}
+						   'action': 'completeLending'}
+				}).done(function(data) {
+					console.log(data);
+				}).fail(function(a, b) {
+					console.log(a);
+					console.log(b);
+				});
+				location.reload();
+			} else {
+				alert("Invalid OTP");
+			}
+		}
+
+		function confirmReturnOTP(notifid, actual_otp) {
+			entered_otp = document.getElementById('inputReturnOTP').value;
+			console.log(entered_otp + actual_otp);
+			if (entered_otp == actual_otp) {
+				alert("Return Complete");
+				$.ajax({
+					beforeSend: function(xhr, settings) {
+						phoneNumber = $("#phno").val();
+						message = $("#message").val();
+				        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+				            // Only send the token to relative URLs i.e. locally.
+				            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+				        }
+				     },
+					url: "/request-handle",
+					method: 'POST',
+					data: {'notifid': notifid,
+						   'action': 'completeReturn'}
 				}).done(function(data) {
 					console.log(data);
 				}).fail(function(a, b) {
@@ -188,16 +245,26 @@
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
 					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a><br/>{{notif.desc}}.<br/>Please generate an OTP and tell it to the lender for completing the transaction.
 					<br/>
-					<button class="button small" id="OTP" onclick="generateOTP({{notif.id}});">Generate OTP</button>
+					<button class="button small" id="LendingOTP" onclick="generateLendingOTP({{notif.id}});">Generate OTP</button>
 					{% endif %}
 					{% if notif.type == 'o' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
 					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> has generated an OTP. Please enter that OTP to complete the transaction. <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.<br/>
-					<input placeholder="OTP" id="inputOTP"></input> <button class="button small" id="confirmOTP" onclick="confirmOTP({{notif.id}},{{notif.desc}});">Confirm</button>
+					<input placeholder="OTP" id="inputLendingOTP"></input> <button class="button small" id="confirmLendingOTP" onclick="confirmLendingOTP({{notif.id}},{{notif.desc}});">Confirm</button>
 					{% endif %}
 					{% if notif.type == 'd' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
 					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> declined your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.
+					{% endif %}
+					{% if notif.type == 'return' %}
+					Generate an OTP to initiate the return of <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a> to <a href="/profile/{{notif.other_user.id}}"><img style="width: 10%;" src= "{{notif.other_user.profile_pic_url}}"/></a>
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a>.<br/>
+					<button class="button small" id="ReturnOTP" onclick="generateReturnOTP({{notif.id}});">Generate OTP</button>
+					{% endif %}
+					{% if notif.type == 'returnOTP' %}
+					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> has generated an OTP. Please enter that OTP to complete the return process. <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.<br/>
+					<input placeholder="OTP" id="inputReturnOTP"></input> <button class="button small" id="confirmReturnOTP" onclick="confirmReturnOTP({{notif.id}},{{notif.desc}});">Confirm</button>
 					{% endif %}
 					<br/>
 					</li>

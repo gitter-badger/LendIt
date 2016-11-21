@@ -52,13 +52,15 @@ def profile(request, pk):
 		return HttpResponseRedirect("/login")
 	self_profile = request.user == lendituser.user
 	user_books = UserBook.objects.filter(user=lendituser)
+	user_borrowed_books = Borrowed.objects.filter(user=request.user.lendituser)
 	borrowed_or_not = []
 	for i in user_books:
 		borrowed_or_not.append(Borrowed.objects.filter(user=request.user.lendituser, lender=lendituser, book=i))
 	return render(request, 'profile.html', {'userbooks': user_books,
 											'lenuser': lendituser,
 											'self_profile': self_profile,
-	                                        'borrowed_or_not': borrowed_or_not})
+	                                        'borrowed_or_not': borrowed_or_not,
+	                                        'user_borrowed_books': user_borrowed_books})
 
 
 def request_book(request, user_pk, book_pk):
@@ -70,6 +72,13 @@ def request_book(request, user_pk, book_pk):
 	lender.save()
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+def return_book(request, user_pk, book_pk):
+	lender = LenditUser.objects.filter(id=user_pk)[0]
+	userbook = UserBook.objects.filter(id=book_pk)[0]
+	Notification(user=request.user.lendituser, other_user=lender, book=userbook, type='return', desc='',read=0).save()
+	request.user.lendituser.new_notifications = lender.new_notifications + 1
+	request.user.lendituser.save()
+	return HttpResponseRedirect("/notifications")
 
 def notifications(request):
 	notifications = Notification.objects.filter(user=request.user.lendituser).order_by('-id')
@@ -115,7 +124,7 @@ def request_handle(request):
 													 book=notification.book)[0]
 			borrowed_entry.delete()
 			notification.delete()
-		if request.POST['action'] == 'generateOTP':
+		if request.POST['action'] == 'generateLendingOTP':
 			Notification(user=notification.other_user,
 						 other_user=request.user.lendituser,
 						 book=notification.book,
@@ -125,10 +134,28 @@ def request_handle(request):
 			notification.other_user.new_notifications += 1
 			notification.other_user.save()
 			notification.delete()
-		if request.POST['action'] == 'complete':
+		if request.POST['action'] == 'generateReturnOTP':
+			Notification(user=notification.other_user,
+						 other_user=request.user.lendituser,
+						 book=notification.book,
+						 type='returnOTP',
+						 desc=str(request.POST["otp"]),
+						 read=0).save()
+			notification.other_user.new_notifications += 1
+			notification.other_user.save()
+			notification.delete()
+		if request.POST['action'] == 'completeLending':
 			notification.book.status = 'Lent'
 			notification.book.save()
 			notification.delete()
+		if request.POST['action'] == 'completeReturn':
+			notification.book.status = 'Available'
+			notification.book.save()
+			notification.delete()
+			borrowed_entry = Borrowed.objects.filter(user=notification.other_user,
+													 lender=request.user.lendituser,
+													 book=notification.book)[0]
+			borrowed_entry.delete()
 		return HttpResponse("Handled")
 
 
