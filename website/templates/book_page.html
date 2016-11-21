@@ -12,6 +12,30 @@
 		<script src="/static/lyv/js/skel.min.js"></script>
 		<script src="/static/lyv/js/skel-layers.min.js"></script>
 		<script src="/static/lyv/js/init.js"></script>
+		<script type='text/javascript' src='https://www.bing.com/mapspreview/sdk/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
+		<script>
+			var map;
+			function loadMapScenario() {
+			    map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+			        credentials: 'AtiNL67ZpqYBWmnhCsdMCsdOpDP9WqLCTf239s4EvHgMjZUj-Jfa1BW4uaLq-MUa',
+			        center: new Microsoft.Maps.Location(19.130742, 72.915930),
+			        zoom: 10
+			    });
+			    var myLocationPin = new Microsoft.Maps.Pushpin(map.getCenter(), {
+			    		color: 'blue',
+			    		title: 'Arpan Banerjee',
+			    		icon: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p32x32/12250033_820059668116662_5292971314145053765_n.jpg?oh=abd658d0e39c353126d701f9c58a3084&oe=58CE873C'
+	    			});
+			    map.entities.push(myLocationPin);
+			    Microsoft.Maps.Events.addHandler(myLocationPin, 'click', function() { 
+			    	alert("ma ka lauda"); }
+			    );
+			    var NihalPin = new Microsoft.Maps.Pushpin(
+			    	new Microsoft.Maps.Location(19.174, 72.745), {color: 'red'});
+			    map.entities.push(NihalPin);
+			}
+			loadMapScenario();
+		</script>
 
 		<noscript>
 			<link rel="stylesheet" href="/static/lyv/css/skel.css" />
@@ -53,7 +77,8 @@
 					<h3>No lender around you at this moment.</h3>
 				{% endif %}
 			</header>
-			<div class="row 150%" style="display: flex">
+			
+			<!-- <div class="row 150%" style="display: flex">
 				{% for userbook in userbooks %}
 					{% if userbook.user.user != request.user %}
 						<div class="4u 12u$(medium)">
@@ -67,12 +92,13 @@
 							</section>
 						</div>
 					{%endif%}
-			{% if forloop.counter == 4 %}
-			</div>
+					{% if forloop.counter == 4 %}
+			</div>			
 			<div class="row 150%" style="display: flex">
-			{%endif%}
+					{%endif%}
 				{% endfor %}
-			</div>		
+			</div> -->	
+			<div class="row 150%" id='myMap' style='width: 100%; height: 100%;'></div> 
 		</div>
 	</section>
 </div>
