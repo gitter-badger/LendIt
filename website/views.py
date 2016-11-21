@@ -1,8 +1,11 @@
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from website.models import *
 import random
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Create your views here.
 
@@ -11,7 +14,7 @@ def home(request):
 	books = list(Book.objects.all())
 	random.shuffle(books)
 	sixbooks = books[:6]
-	return render(request, 'homepage.html', {'books': sixbooks})
+	return render(request, 'homepage.html', {'user': request.user, 'books': sixbooks})
 
 
 def lend(request):
@@ -115,3 +118,17 @@ def request_handle(request):
 			borrowed_entry.delete()
 			notification.delete()
 		return HttpResponse("Handled")
+
+
+@csrf_exempt
+def update_location(request):
+	if request.method == "POST":
+		lendituser = request.user.lendituser;
+		lat = request.POST['latitude']
+		long = request.POST['longitude']
+		lendituser.lat = lat
+		lendituser.long = long
+		lendituser.save()
+		return HttpResponseRedirect(reverse('home'))
+	else:
+		return HttpResponse("you are here")
