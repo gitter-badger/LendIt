@@ -97,8 +97,6 @@ def request_handle(request):
 													 book=notification.book)[0]
 			borrowed_entry.accepted = 1
 			borrowed_entry.save()
-			notification.book.status = 'Lent'
-			notification.book.save()
 			notification.delete()
 		if request.POST['action'] == 'decline':
 			Notification(user=notification.other_user,
@@ -113,5 +111,19 @@ def request_handle(request):
 													 lender=request.user.lendituser,
 													 book=notification.book)[0]
 			borrowed_entry.delete()
+			notification.delete()
+		if request.POST['action'] == 'generateOTP':
+			Notification(user=notification.other_user,
+						 other_user=request.user.lendituser,
+						 book=notification.book,
+						 type='o',
+						 desc=str(request.POST["otp"]),
+						 read=0).save()
+			notification.other_user.new_notifications += 1
+			notification.other_user.save()
+			notification.delete()
+		if request.POST['action'] == 'complete':
+			notification.book.status = 'Lent'
+			notification.book.save()
 			notification.delete()
 		return HttpResponse("Handled")

@@ -38,7 +38,8 @@ class Borrowed(models.Model):
 
 
 class Notification(models.Model):
-    TYPE = (('r','r'),('a','a'),('d','d'))
+    # r:request a: accept d:decline o:OTP generate
+    TYPE = (('r','r'),('a','a'),('d','d'), ('o','o'))
     user = models.ForeignKey('LenditUser', related_name='me_user')
     other_user = models.ForeignKey('LenditUser', related_name='other_user')
     book = models.ForeignKey('UserBook')

@@ -54,6 +54,63 @@
 			onclickaccept();
 		}
 
+		function generateOTP(notifid) {
+			console.log("generateOTP " + notifid);
+			var otp = String(Math.floor((Math.random() * 1000000)));
+			document.getElementById("OTP").innerHTML=otp;
+			document.getElementById("OTP").className += " alt";
+			document.getElementById("OTP").disabled = true;
+
+			$.ajax({
+				beforeSend: function(xhr, settings) {
+			        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+			            // Only send the token to relative URLs i.e. locally.
+			            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+			        }
+			     },
+				url: "/request-handle",
+				method: 'POST',
+				data: {'notifid': notifid,
+					   'action': 'generateOTP',
+					   'otp': otp}
+			}).done(function(data) {
+				console.log(data);
+			}).fail(function(a, b) {
+				console.log(a);
+				console.log(b);
+			});
+		}
+
+		function confirmOTP(notifid, actual_otp) {
+			entered_otp = document.getElementById('inputOTP').value;
+			console.log(entered_otp + actual_otp);
+			if (entered_otp == actual_otp) {
+				alert("Transaction Complete");
+				$.ajax({
+					beforeSend: function(xhr, settings) {
+						phoneNumber = $("#phno").val();
+						message = $("#message").val();
+				        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+				            // Only send the token to relative URLs i.e. locally.
+				            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+				        }
+				     },
+					url: "/request-handle",
+					method: 'POST',
+					data: {'notifid': notifid,
+						   'action': 'complete'}
+				}).done(function(data) {
+					console.log(data);
+				}).fail(function(a, b) {
+					console.log(a);
+					console.log(b);
+				});
+				location.reload();
+			} else {
+				alert("Invalid OTP");
+			}
+		}
+
 		function onclickaccept() {
 			console.log("Accept " + notifid);
 			$.ajax({
@@ -103,8 +160,8 @@
 				console.log(a);
 				console.log(b);
 			});
-
 		}
+
 	</script>
 	</head>
 
@@ -129,7 +186,14 @@
 					{% endif %}
 					{% if notif.type == 'a' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
-					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a><br/>{{notif.desc}}.
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> accepted your request for lending <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a><br/>{{notif.desc}}.<br/>Please generate an OTP and tell it to the lender for completing the transaction.
+					<br/>
+					<button class="button small" id="OTP" onclick="generateOTP({{notif.id}});">Generate OTP</button>
+					{% endif %}
+					{% if notif.type == 'o' %}
+					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
+					<a href="/profile/{{notif.other_user.id}}">{{ notif.other_user.user.first_name }} {{ notif.other_user.user.last_name }}</a> has generated an OTP. Please enter that OTP to complete the transaction. <a href="/book/{{notif.book}}">{{notif.book.orig_book.name}}</a>.<br/>
+					<input placeholder="OTP" id="inputOTP"></input> <button class="button small" id="confirmOTP" onclick="confirmOTP({{notif.id}},{{notif.desc}});">Confirm</button>
 					{% endif %}
 					{% if notif.type == 'd' %}
 					<a href="/profile/{{notif.other_user.id}}"><img style="width: 10%; float: left" src= "{{notif.other_user.profile_pic_url}}"/></a>
