@@ -18,9 +18,23 @@ def user_profile_picture(backend, strategy, details, response, user=None, *args,
             access_token,
         )
 
+        small_url = u'https://graph.facebook.com/{0}/' \
+                    u'?fields=picture.width(25).height(25)' \
+                    u'&access_token={1}'.format(
+            fbuid,
+            access_token,
+        )
+
         request = urllib2.Request(url)
         email = json.loads(urllib2.urlopen(request).read()).get('email')
-    social_auth_user, created = LenditUser.objects.update_or_create(
-    	user=user,
-    	defaults={'profile_pic_url': pic_url, 'email': email},
+
+        request = urllib2.Request(small_url)
+        small_pic_url = json.loads(urllib2.urlopen(request).read()).get('picture').get('data').get('url')
+        social_auth_user, created = LenditUser.objects.update_or_create(
+        	user=user,
+        	defaults={
+                'profile_pic_url': pic_url,
+                'small_pic_url': small_pic_url,
+                'email': email
+            },
     	)
