@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -20,10 +22,11 @@ class LenditUser(models.Model):
     new_notifications = models.IntegerField(default=0)
     lat = models.DecimalField(default=0, decimal_places=3, max_digits=7)
     long = models.DecimalField(default=0, decimal_places=3, max_digits=7)
+    rating = models.IntegerField(default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
 
 
 class UserBook(models.Model):
-    STATUS = (('Lent', 'Lent'), ('Available','Available'))
+    STATUS = (('Lent', 'Lent'), ('Available', 'Available'))
     user = models.ForeignKey('LenditUser')
     orig_book = models.ForeignKey('Book')
     desc = models.CharField(max_length=1000)
@@ -42,7 +45,7 @@ class Borrowed(models.Model):
 
 class Notification(models.Model):
     # r:request a: accept d:decline o:OTP generate
-    TYPE = (('r','r'),('a','a'),('d','d'), ('o','o'), ('return','return'))
+    TYPE = (('r','r'),('a','a'),('d','d'), ('o','o'), ('return','return'),('returnOTP','returnOTP'))
     user = models.ForeignKey('LenditUser', related_name='me_user')
     other_user = models.ForeignKey('LenditUser', related_name='other_user')
     book = models.ForeignKey('UserBook')

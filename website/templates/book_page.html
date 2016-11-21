@@ -12,42 +12,35 @@
 		<script src="/static/lyv/js/skel.min.js"></script>
 		<script src="/static/lyv/js/skel-layers.min.js"></script>
 		<script src="/static/lyv/js/init.js"></script>
-		<script type='text/javascript' src='https://www.bing.com/mapspreview/sdk/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
+		<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
 		<script>
 			var map;
-
-			function addLenderPin(lender) {
-				var lenderPin = new Microsoft.Maps.Pushpin(
-					new Microsoft.Maps.Location(lender.lat, lender.long), {
-						title: lender.user.first_name + " " + lender.user.last_name,
-						icon: lender.small_pic_url
-					})
-				map.entities.push(lenderPin);
-				Microsoft.Maps.Events.addHandler(lenderPin, 'click', function() {
-					alert("heyyy");
-				});
-			}
-
 			function loadMapScenario() {
-			    map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-			        credentials: 'AtiNL67ZpqYBWmnhCsdMCsdOpDP9WqLCTf239s4EvHgMjZUj-Jfa1BW4uaLq-MUa',
-			        center: new Microsoft.Maps.Location("{{request.user.lendituser.lat}}", "{{request.user.lendituser.long}}"),
-			        zoom: 10
-			    });
-			    // var myLocationPin = new Microsoft.Maps.Pushpin(map.getCenter(), {
-		    	// 	color: 'blue',
-		    	// 	title: 'Arpan Banerjee',
-		    	// 	icon: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p32x32/12250033_820059668116662_5292971314145053765_n.jpg?oh=abd658d0e39c353126d701f9c58a3084&oe=58CE873C'
-	    		// });
-			    // map.entities.push(myLocationPin);
-			    // Microsoft.Maps.Events.addHandler(myLocationPin, 'click', function() { 
-			    // 	alert("ma ka lauda"); }
-			    // );
-			    var myLocationPin = new Microsoft.Maps.Pushpin(
-			    	map.getCenter(), {color: 'red'});
+				lenderPins = {{lenders|safe}};
+				console.log(lenderPins);
+				map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+				    credentials: 'AtiNL67ZpqYBWmnhCsdMCsdOpDP9WqLCTf239s4EvHgMjZUj-Jfa1BW4uaLq-MUa',
+				    center: new Microsoft.Maps.Location({{request.user.lendituser.lat}}, {{request.user.lendituser.long}}),
+				    zoom: 15
+				});
+				var myLocationPin = new Microsoft.Maps.Pushpin(
+			    	map.getCenter(), {color: 'blue'});
 			    map.entities.push(myLocationPin);
+
+				for (var i = 0; i < lenderPins.length; i++) {
+					var lenderPin = new Microsoft.Maps.Pushpin(
+						new Microsoft.Maps.Location(lenderPins[i].lat, lenderPins[i].long), {
+							title: lenderPins[i].first_name + " " + lenderPins[i].last_name,
+							icon: lenderPins[i].small_pic_url
+						}
+					);
+					map.entities.push(lenderPin);
+					var userid = lenderPins[i].userid.toString();
+					Microsoft.Maps.Events.addHandler(lenderPin, 'click', function() {
+						window.location.href = "/book/" + userid + "/" + "{{book.id}}";
+					});
+				}
 			}
-			loadMapScenario();
 		</script>
 
 		<noscript>
@@ -81,17 +74,12 @@
 						{% for userbook in userbooks %}
 							{% if userbook.user.user == request.user %}
 								<h3>No lender around you at this moment.</h3>
+							{% else %}
+								<h2>Lenders around you</h2>
 							{%endif%}
 						{%endfor%}
 					{% else %}
 					<h2>Lenders around you</h2>
-					{% for userbook in userbooks %}
-						{% if userbook.user.user != request.user %}
-							<script type="text/javascript">
-								addLenderPin("{{userbook.user}}");
-							</script>
-						{% endif %}
-					{% endfor %}
 					{% endif %}
 				{% else %}
 					<h3>No lender around you at this moment.</h3>
