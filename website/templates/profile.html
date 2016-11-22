@@ -237,6 +237,55 @@ jQuery(function ($) {
 {% endif %}
 
 
+{% if self_profile %}
+	{% if user_borrowed_books %}
+	<br/><br/>
+	<center>
+	<h1>Borrowed Books:</h1>
+
+	<div id="example" class="example pagespan">
+		<div class="scrollbar">
+			<div class="handle">
+				<div class="mousearea"></div>
+			</div>
+		</div>
+
+		<button class="backward"><i class="icon-angle-left"></i></button>
+		<button class="forward"><i class="icon-angle-right"></i></button>
+
+		<div class="frame">
+			<ul>
+			{% for book in user_borrowed_books %}
+				<li style="display: inline;">
+				<div style="width: auto; height: 100%;">
+			    <img src="{{book.book.image_url}}" style="width: 350px; height: 300px; margin: 0px;"/>
+			    <div style="padding: 10px; display: block; font-size: 20pt; line-height: 30px; text-align: left">
+			    <br/>
+			    <b>Book name: </b>{{book.book.orig_book.name}} <br/>
+			    <b>Lending Duration: </b>{{book.book.lending_time}} days<br/>
+			    <b>Book condition: </b>{{book.book.condition}}
+			    </div>
+			    <button onclick="document.location.href='../../return_book/{{book.lender.id}}/{{book.book.id}}'">Return Book</button>
+		        <br>
+		        </div>
+		        </li>
+			{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+		<div class="controls">
+			<button data-action="toStart"><i class="icon-double-angle-left"></i> Start</button>
+			<span class="divider"></span>
+			<button class="prev"><i class="icon-angle-left"></i> Prev</button>
+			<span class="divider"></span>
+			<span class="divider"></span>
+			<button class="next">Next <i class="icon-angle-right"></i></button>
+			<span class="divider"></span>
+			<button data-action="toEnd">End <i class="icon-double-angle-right"></i></button>
+		</div>
+	</div>
+{% endif %}
+
 
  <div class="push"></div>
 
