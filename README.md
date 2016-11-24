@@ -4,7 +4,7 @@
 
 ### An application for borrowing and lending books, movies or games.
 
-LendIt is a web application developed in the InOut 3.0 Hackathon at National Institute of Technology Surat.
+LendIt is a web application developed using the Django framework.
 
 **It is designed to facilitate sharing of mostly one-time use commodities such as books, movies or games.**
 
