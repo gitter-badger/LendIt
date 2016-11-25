@@ -4,3 +4,4 @@
 *.DS_Store
 lenditvenv
 db.sqlite3
+lendit/staticfiles/*
